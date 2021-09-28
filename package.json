@@ -1,0 +1,54 @@
+{
+  "name": "@mov-ai/frontend-lib-monaco-code-editor",
+  "version": "1.0.0",
+  "description": "Mov.ai's repository for Monaco Code Editor",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "storybook": "start-storybook",
+    "build": "webpack --mode=production",
+    "buildDev": "webpack --mode=development --watch=true",
+    "clean": "rm -rf node_modules/ package-lock.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor.git"
+  },
+  "keywords": [
+    "frontend",
+    "monaco editor",
+    "code editor",
+    "react.js"
+  ],
+  "author": "MOV.AI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor/issues"
+  },
+  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
+  "dependencies": {
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@storybook/addon-knobs": "^6.3.1",
+    "@storybook/addons": "^6.3.8",
+    "@storybook/api": "^6.3.8",
+    "@storybook/components": "^6.3.8",
+    "@storybook/core-events": "^6.3.8",
+    "@storybook/react": "^6.3.8",
+    "@storybook/theming": "^6.3.8",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "node-sass": "^6.0.1",
+    "path": "^0.12.7",
+    "sass-loader": "^12.1.0",
+    "typescript": "^4.4.3",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
