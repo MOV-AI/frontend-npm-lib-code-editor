@@ -27,6 +27,9 @@
   },
   "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
   "dependencies": {
+    "@monaco-editor/react": "^4.2.2",
+    "monaco-editor": "^0.28.1",
+    "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
   },

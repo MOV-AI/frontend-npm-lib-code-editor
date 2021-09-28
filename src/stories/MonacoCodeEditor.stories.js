@@ -1,5 +1,5 @@
 import React from "react";
-import MonacoCodeEditor from "../components/MonacoCodeEditor/index.js";
+import MonacoCodeEditor from "../components/MonacoCodeEditor/MonacoCodeEditor.js";
 
 export default { title: "Monaco Code Editor" };
 
