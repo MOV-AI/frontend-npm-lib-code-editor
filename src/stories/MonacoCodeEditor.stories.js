@@ -17,7 +17,7 @@ const Template = (args) => <MonacoCodeEditor {...args} />;
 export const Python = Template.bind({});
 Python.args = {
   language: "python",
-  code: `class LightSwitch:
+  value: `class LightSwitch:
 	
 	def __init__(self):
 		""" Declares all necessary variables including list of states, histories etc. 
@@ -42,7 +42,7 @@ Python.args = {
 export const Yaml = Template.bind({});
 Yaml.args = {
   language: "yaml",
-  code: `camera_front:
+  value: `camera_front:
   tf_prefix: camera_front
   serial_no: '"943222074478"'
 camera_back:

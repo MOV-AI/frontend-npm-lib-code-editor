@@ -6,20 +6,21 @@ const MonacoCodeEditor = (props) => {
   // Editor options
   const options = { selectOnLineNumbers: true };
   // Props
-  const code = props.code;
+  const value = props.value;
   const theme = props.theme;
-  const width = props.width;
-  const height = props.height;
+  const style = props.style;
   const language = props.language;
+  const onChange = props.onChange;
 
   return (
-    <div style={{ width, height }}>
+    <div style={style}>
       <Editor
         theme={theme}
-        options={options}
+        options={{ ...options, ...props.options }}
         defaultLanguage="python"
         language={language}
-        value={code}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
@@ -28,17 +29,19 @@ const MonacoCodeEditor = (props) => {
 MonacoCodeEditor.propTypes = {
   theme: PropTypes.string,
   language: PropTypes.string,
+  onChange: PropTypes.func,
+  options: PropTypes.object,
   value: PropTypes.string,
-  width: PropTypes.any,
-  height: PropTypes.any,
+  style: PropTypes.object,
 };
 
 MonacoCodeEditor.defaultProps = {
   value: "",
-  height: "90vh",
-  width: "100%",
   theme: "vs-dark",
   language: "python",
+  options: {},
+  onChange: () => {},
+  style: { display: "flex", flexDirection: "column", flexGrow: 1 },
 };
 
 export default MonacoCodeEditor;
