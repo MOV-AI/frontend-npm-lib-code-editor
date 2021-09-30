@@ -12,13 +12,16 @@ export default {
   },
 };
 
-const Template = (args) => <MonacoCodeEditor {...args} />;
+const Template = (args) => (
+  <div style={{ height: "90vh" }}>
+    <MonacoCodeEditor {...args} />
+  </div>
+);
 
 export const Python = Template.bind({});
 Python.args = {
-  style: { height: "90vh" },
+  style: { minHeight: "90vh" },
   language: "python",
-  defaultLanguage: "python",
   value: `class LightSwitch:
 	
 	def __init__(self):
@@ -43,9 +46,8 @@ Python.args = {
 
 export const Yaml = Template.bind({});
 Yaml.args = {
-  style: { height: "90vh" },
+  style: { minHeight: "90vh" },
   language: "yaml",
-  defaultLanguage: "yaml",
   value: `%TAG ! tag:clarkevans.com,2002:
 --- !shape
   # Use the ! handle for presenting
@@ -87,9 +89,8 @@ dock:
 
 export const XML = Template.bind({});
 XML.args = {
-  style: { height: "90vh" },
+  style: { minHeight: "90vh" },
   language: "xml",
-  defaultLanguage: "xml",
   value: `<?xml version="1.0"?>
 <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
   <connectionStrings>
@@ -108,8 +109,7 @@ XML.args = {
 
 export const Javascript = Template.bind({});
 Javascript.args = {
-  style: { height: "90vh" },
-  defaultLanguage: "javascript",
+  style: { minHeight: "90vh" },
   language: "javascript",
   value: `const greeting = () => {
     alert("Hello world");

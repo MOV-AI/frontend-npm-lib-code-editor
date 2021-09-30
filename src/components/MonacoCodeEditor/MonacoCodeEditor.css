@@ -1,0 +1,26 @@
+.mov-ai-monaco-code-editor[style] {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mov-ai-monaco-code-editor .monaco-editor[style] {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mov-ai-monaco-code-editor .monaco-editor .overflow-guard[style] {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mov-ai-monaco-code-editor .monaco-editor .overflow-guard .margin[style] {
+  height: 100% !important;
+}
+
+.mov-ai-monaco-code-editor
+  .monaco-editor
+  .overflow-guard
+  .monaco-scrollable-element[style] {
+  height: 100% !important;
+  width: calc(100% - 68px) !important;
+}
