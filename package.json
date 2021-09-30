@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "build": "webpack --mode=production",
     "buildDev": "webpack --mode=development --watch",
     "clean": "rm -rf node_modules/ package-lock.json"
@@ -27,7 +28,6 @@
   },
   "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
   "dependencies": {
-    "@monaco-editor/react": "^4.2.2",
     "monaco-editor": "^0.28.1",
     "monaco-editor-webpack-plugin": "^4.2.0",
     "prop-types": "^15.7.2",
