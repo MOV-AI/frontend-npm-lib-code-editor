@@ -16,7 +16,9 @@ const Template = (args) => <MonacoCodeEditor {...args} />;
 
 export const Python = Template.bind({});
 Python.args = {
+  style: { height: "90vh" },
   language: "python",
+  defaultLanguage: "python",
   value: `class LightSwitch:
 	
 	def __init__(self):
@@ -41,14 +43,33 @@ Python.args = {
 
 export const Yaml = Template.bind({});
 Yaml.args = {
+  style: { height: "90vh" },
   language: "yaml",
-  value: `camera_front:
-  tf_prefix: camera_front
-  serial_no: '"943222074478"'
+  defaultLanguage: "yaml",
+  value: `%TAG ! tag:clarkevans.com,2002:
+--- !shape
+  # Use the ! handle for presenting
+  # tag:clarkevans.com,2002:circle
+- !circle
+  center: &ORIGIN {x: 73, y: 129}
+  radius: 7
+- !line
+  start: *ORIGIN
+  finish: { x: 89, y: 102 }
+- !label
+  start: *ORIGIN
+  color: 0xFFEEBB
+  text: Pretty vector drawing.
+  
+
+
+camera_front:
+tf_prefix: camera_front
+serial_no: '"944122071936"'
 camera_back:
   tf_prefix: camera_back
-  serial_no: '"944122072394"'
-ble_battery_mac: "00:35:FF:34:72:C0" 
+  serial_no: '"902512070494"'
+ble_battery_mac: "B4:52:A9:B6:C0:BA"
 ble_battery_model: "UPOWER_UE12LI22BL"  
 states:
   boot:
@@ -59,7 +80,38 @@ states:
     services: []
   runtime:
     flow: tugbot_pick_drop
-#dock:
-#    expected_tags: [327, 308]
-#    shift: 0.0`,
+dock:
+    expected_tags: [327, 308]
+    shift: 0.0`,
+};
+
+export const XML = Template.bind({});
+XML.args = {
+  style: { height: "90vh" },
+  language: "xml",
+  defaultLanguage: "xml",
+  value: `<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <connectionStrings>
+    <add name="MyDB" 
+      connectionString="value for the deployed Web.config file" 
+      xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
+  </connectionStrings>
+  <system.web>
+    <customErrors defaultRedirect="GenericError.htm"
+      mode="RemoteOnly" xdt:Transform="Replace">
+      <error statusCode="500" redirect="InternalError.htm"/>
+    </customErrors>
+  </system.web>
+</configuration>`,
+};
+
+export const Javascript = Template.bind({});
+Javascript.args = {
+  style: { height: "90vh" },
+  defaultLanguage: "javascript",
+  language: "javascript",
+  value: `const greeting = () => {
+    alert("Hello world");
+}`,
 };
