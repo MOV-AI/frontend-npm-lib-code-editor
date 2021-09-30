@@ -1,5 +1,6 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 
 module.exports = {
   entry: "./index.js",
@@ -12,6 +13,7 @@ module.exports = {
   target: "web",
   devtool: "source-map",
   externals: [nodeExternals()],
+  plugins: [new MonacoWebpackPlugin()],
   module: {
     rules: [
       {
@@ -38,6 +40,11 @@ module.exports = {
         test: /\.scss$/,
         use: ["style-loader", "css-loader", "sass-loader"],
         include: path.resolve(__dirname, "./src"),
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+        include: path.resolve(__dirname, "./node_modules/monaco-editor"),
       },
     ],
   },
