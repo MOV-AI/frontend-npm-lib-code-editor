@@ -5,15 +5,19 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
+    "coverage": "npm test -- --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "webpack --mode=production",
     "buildDev": "webpack --mode=development --watch",
     "clean": "rm -rf node_modules/ package-lock.json"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/mov-ai"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor.git"
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
   },
   "keywords": [
     "frontend",
@@ -24,9 +28,9 @@
   "author": "MOV.AI",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor/issues"
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor/issues"
   },
-  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
+  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-code-editor#readme",
   "dependencies": {
     "monaco-editor": "^0.28.1",
     "monaco-editor-webpack-plugin": "^4.2.0",
