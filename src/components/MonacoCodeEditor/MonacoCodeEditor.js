@@ -1,11 +1,13 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
-import Editor from "@monaco-editor/react";
+import "./MonacoCodeEditor.css";
+import * as monaco from "monaco-editor";
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
-  // Editor options
-  const options = { selectOnLineNumbers: true };
+  // state hooks
   const editorRef = createRef();
+  const [isFirstTime, setFirstTime] = React.useState(true);
+  const [editor, setEditor] = React.useState(null);
   // Props
   const value = props.value;
   const theme = props.theme;
@@ -13,25 +15,48 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   const language = props.language;
   const onChange = props.onChange;
 
-  const onEditorMount = (editor, monaco) => {
-    // Set forwarded ref
-    if (ref) ref.current = editor;
-    // Call props onLoad
-    props.onLoad(editor);
-  };
+  // On component did mount
+  React.useEffect(() => {
+    if (!isFirstTime) return;
+    const element = editorRef.current;
+    const _editor = monaco.editor.create(element, {
+      value: value,
+      language: language,
+      theme: theme,
+      "semanticHighlighting.enabled": true,
+      selectOnLineNumbers: true,
+      autoIndent: "full",
+      ...props.options,
+    });
+    setFirstTime(false);
+    setEditor(_editor);
+    // ========== Setup events ========== //
+    // On change
+    _editor.onDidChangeModelContent(() => onChange(_editor.getValue()));
+    // On load
+    props.onLoad(_editor);
+    if (ref) ref.current = _editor;
+  }, []);
+
+  // On change Theme
+  React.useEffect(() => {
+    monaco.editor.setTheme(theme);
+  }, [theme]);
+
+  // On change Language
+  React.useEffect(() => {
+    if (editor) {
+      const model = editor.getModel();
+      monaco.editor.setModelLanguage(model, language);
+    }
+  }, [language]);
 
   return (
-    <div style={{ ...style, maxHeight: "100%" }} ref={editorRef}>
-      <Editor
-        theme={theme}
-        options={{ ...options, ...props.options }}
-        defaultLanguage="python"
-        language={language}
-        value={value}
-        onMount={onEditorMount}
-        onChange={onChange}
-      />
-    </div>
+    <div
+      style={{ ...style, maxHeight: "100%", maxWidth: "100%" }}
+      className="mov-ai-monaco-code-editor"
+      ref={editorRef}
+    ></div>
   );
 });
 

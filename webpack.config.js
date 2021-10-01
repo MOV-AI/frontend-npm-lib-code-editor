@@ -43,8 +43,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        resolve: {
+          extensions: [".css"],
+        },
         use: ["style-loader", "css-loader"],
-        include: path.resolve(__dirname, "./node_modules/monaco-editor"),
+        include: [
+          path.resolve(__dirname, "./node_modules/monaco-editor"),
+          path.resolve(__dirname, "./src"),
+        ],
+      },
+      {
+        test: /\.ttf$/,
+        use: ["file-loader"],
       },
     ],
   },
