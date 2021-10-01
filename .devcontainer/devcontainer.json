@@ -1,0 +1,26 @@
+{
+  "name": "vsc-${containerWorkspaceFolderBasename}",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "16"
+    }
+  },
+  "extensions": [
+    "esbenp.prettier-vscode",
+    "waderyan.gitblame",
+    "eamodio.gitlens",
+    "dbaeumer.vscode-eslint",
+    "burkeholland.simple-react-snippets"
+  ],
+  "postCreateCommand": "yarn ci",
+  "remoteUser": "node",
+  "runArgs": [
+    "--network=host"
+  ],
+  "mounts": [
+    "type=bind,src=${localEnv:HOME}/.npmrc,dst=/home/node/.npmrc",
+    "type=bind,src=${localEnv:HOME}/.ssh,dst=/home/node/.ssh"
+  ]
+}
