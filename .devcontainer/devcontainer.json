@@ -21,6 +21,7 @@
   ],
   "mounts": [
     "type=bind,src=${localEnv:HOME}/.npmrc,dst=/home/node/.npmrc",
-    "type=bind,src=${localEnv:HOME}/.ssh,dst=/home/node/.ssh"
+    "type=bind,src=${localEnv:HOME}/.ssh,dst=/home/node/.ssh",
+    "type=bind,src=${localEnv:HOME}/movai/src/feapps,dst=/workspaces/"
   ]
 }
