@@ -28,11 +28,19 @@
   },
   "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "monaco-editor": "^0.28.1",
+    "monaco-editor-core": "^0.28.1",
     "monaco-editor-webpack-plugin": "^4.2.0",
+    "monaco-languageclient": "^0.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "url": "^0.11.0",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-protocol": "^3.16.0",
+    "vscode-ws-jsonrpc": "^0.2.0",
+    "ws": "^8.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",

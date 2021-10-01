@@ -1,13 +1,15 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
-import "./MonacoCodeEditor.css";
+import { MonacoServices } from "monaco-languageclient";
+import { connectToLanguageServer } from "../../language-server/client";
 import * as monaco from "monaco-editor";
+import "./MonacoCodeEditor.css";
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // state hooks
-  const editorRef = createRef();
   const [isFirstTime, setFirstTime] = React.useState(true);
   const [editor, setEditor] = React.useState(null);
+  const editorRef = createRef();
   // Props
   const value = props.value;
   const theme = props.theme;
@@ -15,10 +17,20 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   const language = props.language;
   const onChange = props.onChange;
 
+  // ========== Languages ========== //
+  const python = {
+    id: "python",
+    extensions: [".py"],
+    aliases: ["python"],
+    mimetypes: ["application/text"],
+  };
+
   // On component did mount
   React.useEffect(() => {
     if (!isFirstTime) return;
     const element = editorRef.current;
+    // register
+    monaco.languages.register(python);
     const _editor = monaco.editor.create(element, {
       value: value,
       language: language,
@@ -26,10 +38,15 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
       "semanticHighlighting.enabled": true,
       selectOnLineNumbers: true,
       autoIndent: "full",
+      lightbulb: {
+        enabled: true,
+      },
       ...props.options,
     });
+    MonacoServices.install(editor);
     setFirstTime(false);
     setEditor(_editor);
+    connectToLanguageServer();
     // ========== Setup events ========== //
     // On change
     _editor.onDidChangeModelContent(() => onChange(_editor.getValue()));
@@ -53,9 +70,9 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
 
   return (
     <div
-      style={{ ...style, maxHeight: "100%", maxWidth: "100%" }}
-      className="mov-ai-monaco-code-editor"
       ref={editorRef}
+      className="mov-ai-monaco-code-editor"
+      style={{ ...style, maxHeight: "100%", maxWidth: "100%" }}
     ></div>
   );
 });

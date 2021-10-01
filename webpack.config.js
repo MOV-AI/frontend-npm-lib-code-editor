@@ -14,6 +14,9 @@ module.exports = {
   devtool: "source-map",
   externals: [nodeExternals()],
   plugins: [new MonacoWebpackPlugin()],
+  alias: {
+    vscode: require.resolve("monaco-languageclient/lib/vscode-compatibility"),
+  },
   module: {
     rules: [
       {
