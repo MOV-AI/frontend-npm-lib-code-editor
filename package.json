@@ -9,9 +9,13 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "webpack --mode=production",
-    "buildDev": "webpack --mode=development --watch",
+    "buildDev": "webpack --mode=production --watch",
+    "depcheck": "npx depcheck",
     "clean": "rm -rf node_modules/ package-lock.json"
   },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/mov-ai"
   },
@@ -53,13 +57,16 @@
     "@storybook/theming": "^6.3.8",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.3.0",
     "monaco-css": "^3.8.1",
     "node-sass": "^6.0.1",
     "path": "^0.12.7",
-    "sass-loader": "10.0.3",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.3.0",
     "typescript": "^4.4.3",
-    "webpack": "^4.46.0",
+    "webpack": "^5.54.0",
     "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.0",
     "webpack-node-externals": "^3.0.0"
   }
 }
