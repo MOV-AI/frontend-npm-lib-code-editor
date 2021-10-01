@@ -5,15 +5,19 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
+    "coverage": "npm test -- --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "webpack --mode=production",
     "buildDev": "webpack --mode=development --watch",
     "clean": "rm -rf node_modules/ package-lock.json"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/mov-ai"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
   },
   "keywords": [
     "frontend",
