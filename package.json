@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor.git"
+    "url": "git+https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
   },
   "keywords": [
     "frontend",
@@ -24,9 +24,9 @@
   "author": "MOV.AI",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor/issues"
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor/issues"
   },
-  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-monaco-code-editor#readme",
+  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-code-editor#readme",
   "dependencies": {
     "monaco-editor": "^0.28.1",
     "monaco-editor-webpack-plugin": "^4.2.0",
