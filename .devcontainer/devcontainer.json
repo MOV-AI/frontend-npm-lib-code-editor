@@ -14,7 +14,7 @@
     "dbaeumer.vscode-eslint",
     "burkeholland.simple-react-snippets"
   ],
-  "postCreateCommand": "yarn ci",
+  "postCreateCommand": "npm ci",
   "remoteUser": "node",
   "runArgs": [
     "--network=host"
