@@ -1,13 +1,24 @@
-import React, { createRef } from "react";
+import React, { createRef, useRef } from "react";
 import PropTypes from "prop-types";
 import "./MonacoCodeEditor.css";
 import * as monaco from "monaco-editor";
 
+const createEditor = ({ element, value, language, theme, options }) =>
+  monaco.editor.create(element, {
+    value: value,
+    language: language,
+    theme: theme,
+    "semanticHighlighting.enabled": true,
+    selectOnLineNumbers: true,
+    autoIndent: "full",
+    ...options,
+  });
+
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
-  // state hooks
+  // Refs
   const editorRef = createRef();
-  const [isFirstTime, setFirstTime] = React.useState(true);
-  const [editor, setEditor] = React.useState(null);
+  const editor = useRef(null);
+
   // Props
   const value = props.value;
   const theme = props.theme;
@@ -17,25 +28,23 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
 
   // On component did mount
   React.useEffect(() => {
-    if (!isFirstTime) return;
     const element = editorRef.current;
-    const _editor = monaco.editor.create(element, {
-      value: value,
-      language: language,
-      theme: theme,
-      "semanticHighlighting.enabled": true,
-      selectOnLineNumbers: true,
-      autoIndent: "full",
-      ...props.options,
+    const _editor = createEditor({
+      element,
+      value,
+      theme,
+      style,
+      language,
+      options: { ...props.options },
     });
-    setFirstTime(false);
-    setEditor(_editor);
+
     // ========== Setup events ========== //
     // On change
     _editor.onDidChangeModelContent(() => onChange(_editor.getValue()));
     // On load
     props.onLoad(_editor);
     if (ref) ref.current = _editor;
+    editor.current = _editor;
   }, []);
 
   // On change Theme
@@ -45,8 +54,8 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
 
   // On change Language
   React.useEffect(() => {
-    if (editor) {
-      const model = editor.getModel();
+    if (editor.current) {
+      const model = editor.current.getModel();
       monaco.editor.setModelLanguage(model, language);
     }
   }, [language]);
