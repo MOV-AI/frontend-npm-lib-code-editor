@@ -13,10 +13,6 @@
   height: 100% !important;
 }
 
-.mov-ai-monaco-code-editor .monaco-editor .overflow-guard .margin[style] {
-  height: 100% !important;
-}
-
 .mov-ai-monaco-code-editor
   .monaco-editor
   .overflow-guard
