@@ -79,6 +79,10 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     actions.forEach((action) => {
       _editor.addAction(action);
     });
+    // rerender editor on resize
+    const resizeObserver = new ResizeObserver(() => _editor.layout());
+    resizeObserver.observe(editorRef.current);
+    // Set editor ref
     if (ref) ref.current = _editor;
     editor.current = _editor;
   }, []);
