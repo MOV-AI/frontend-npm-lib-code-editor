@@ -88,6 +88,16 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   }, []);
 
   /**
+   * On change Code
+   */
+  React.useEffect(() => {
+    const currentValue = editor.current?.getValue();
+    if (editor.current && currentValue !== value) {
+      editor.current.setValue(value);
+    }
+  }, [value]);
+
+  /**
    * On change Theme
    */
   React.useEffect(() => {
