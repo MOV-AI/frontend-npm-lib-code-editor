@@ -18,6 +18,7 @@ const createEditor = ({ element, value, language, theme, options }) =>
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
   const editorRef = createRef();
+  const debounceRef = useRef(null);
   const editor = useRef(null);
 
   // Props
@@ -91,10 +92,13 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
    * On change Code
    */
   React.useEffect(() => {
-    const currentValue = editor.current?.getValue();
-    if (editor.current && currentValue !== value) {
-      editor.current.setValue(value);
-    }
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const currentValue = editor.current?.getValue();
+      if (editor.current && currentValue !== value) {
+        editor.current.setValue(value);
+      }
+    }, 100);
   }, [value]);
 
   /**
