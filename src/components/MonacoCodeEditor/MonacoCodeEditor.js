@@ -4,16 +4,30 @@ import "./MonacoCodeEditor.css";
 import * as monaco from "monaco-editor";
 import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
 
-const createEditor = ({ element, value, language, theme, options }) =>
-  monaco.editor.create(element, {
+/**
+ * Create editor
+ * @param {{element: HTMLElement, value: string, language: string, theme: string, options: object, disableMinimap: boolean}} props
+ *  Props to be used to compose editor
+ * @returns Monaco Editor object
+ */
+const createEditor = (props) => {
+  const { element, value, language, theme, options, disableMinimap } = props;
+  return monaco.editor.create(element, {
     value: value,
     language: language,
     theme: theme,
     "semanticHighlighting.enabled": true,
     selectOnLineNumbers: true,
     autoIndent: "full",
+    lineNumbers: disableMinimap ? "off" : "on",
+    overviewRulerBorder: !disableMinimap,
+    overviewRulerLanes: disableMinimap ? 0 : 3,
+    minimap: {
+      enabled: !disableMinimap,
+    },
     ...options,
   });
+};
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
@@ -29,6 +43,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   const onSave = props.onSave;
   const language = props.language;
   const onChange = props.onChange;
+  const disableMinimap = props.disableMinimap;
 
   //========================================================================================
   /*                                                                                      *
@@ -68,6 +83,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
       theme,
       style,
       language,
+      disableMinimap,
       options: { ...props.options },
     });
 
@@ -169,6 +185,7 @@ MonacoCodeEditor.propTypes = {
   onChange: PropTypes.func,
   onLoad: PropTypes.func,
   options: PropTypes.object,
+  disableMinimap: PropTypes.bool,
   value: PropTypes.string,
   style: PropTypes.object,
 };
@@ -181,6 +198,7 @@ MonacoCodeEditor.defaultProps = {
   actions: [],
   onChange: () => {},
   onLoad: () => {},
+  disableMinimap: false,
   style: { display: "flex", flexDirection: "column", flexGrow: 1 },
 };
 
