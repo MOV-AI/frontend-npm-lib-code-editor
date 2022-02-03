@@ -1,33 +1,10 @@
-import React, { createRef, useRef } from "react";
-import PropTypes from "prop-types";
-import "./MonacoCodeEditor.css";
-import * as monaco from "monaco-editor";
-import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
-
-/**
- * Create editor
- * @param {{element: HTMLElement, value: string, language: string, theme: string, options: object, disableMinimap: boolean}} props
- *  Props to be used to compose editor
- * @returns Monaco Editor object
- */
-const createEditor = (props) => {
-  const { element, value, language, theme, options, disableMinimap } = props;
-  return monaco.editor.create(element, {
-    value: value,
-    language: language,
-    theme: theme,
-    "semanticHighlighting.enabled": true,
-    selectOnLineNumbers: true,
-    autoIndent: "full",
-    lineNumbers: disableMinimap ? "off" : "on",
-    overviewRulerBorder: !disableMinimap,
-    overviewRulerLanes: disableMinimap ? 0 : 3,
-    minimap: {
-      enabled: !disableMinimap,
-    },
-    ...options,
-  });
-};
+import React, { createRef, useRef } from 'react';
+import PropTypes from 'prop-types';
+import './MonacoCodeEditor.css';
+//import * as monaco from 'monaco-editor';
+import { MenuRegistry } from 'monaco-editor/esm/vs/platform/actions/common/actions';
+import * as monaco from 'monaco-editor-core';
+import useMonacoEditor from './hooks/useMonacoEditorCore';
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
@@ -44,6 +21,9 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   const language = props.language;
   const onChange = props.onChange;
   const disableMinimap = props.disableMinimap;
+
+  // Hooks
+  const { createEditor } = useMonacoEditor();
 
   //========================================================================================
   /*                                                                                      *
@@ -138,12 +118,12 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
    * On update save function
    */
   React.useEffect(() => {
-    const saveAction = editor.current.getAction("save");
+    const saveAction = editor.current.getAction('save');
     // Remove previous save action (if existing)
     if (saveAction) {
       const menuItems = MenuRegistry._menuItems;
       const contextMenuEntry = [...menuItems].find(
-        (entry) => entry[0]._debugName == "EditorContext"
+        (entry) => entry[0]._debugName == 'EditorContext'
       );
       const contextMenuLinks = contextMenuEntry[1];
       removeAction(contextMenuLinks, saveAction.id);
@@ -151,14 +131,14 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     // Add new save action
     if (onSave)
       editor.current.addAction({
-        id: "save",
-        label: "Save",
+        id: 'save',
+        label: 'Save',
         keybindings: [
           monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S),
         ],
         precondition: null,
         keybindingContext: null,
-        contextMenuGroupId: "navigation",
+        contextMenuGroupId: 'navigation',
         contextMenuOrder: 1,
         run: onSave,
       });
@@ -172,10 +152,9 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
 
   return (
     <div
-      style={{ ...style, maxHeight: "100%", maxWidth: "100%" }}
-      className="mov-ai-monaco-code-editor"
-      ref={editorRef}
-    ></div>
+      style={{ ...style, maxHeight: '100%', maxWidth: '100%' }}
+      className='mov-ai-monaco-code-editor'
+      ref={editorRef}></div>
   );
 });
 
@@ -191,15 +170,15 @@ MonacoCodeEditor.propTypes = {
 };
 
 MonacoCodeEditor.defaultProps = {
-  value: "",
-  theme: "vs-dark",
-  language: "python",
+  value: '',
+  theme: 'vs-dark',
+  language: 'python',
   options: {},
   actions: [],
   onChange: () => {},
   onLoad: () => {},
   disableMinimap: false,
-  style: { display: "flex", flexDirection: "column", flexGrow: 1 },
+  style: { display: 'flex', flexDirection: 'column', flexGrow: 1 },
 };
 
 export default MonacoCodeEditor;
