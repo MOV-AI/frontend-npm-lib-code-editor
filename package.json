@@ -59,7 +59,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
     "monaco-css": "^3.8.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
