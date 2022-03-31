@@ -33,6 +33,7 @@ module.exports = {
               '@babel/plugin-proposal-json-strings',
               '@babel/plugin-transform-runtime',
             ],
+            targets: ["defaults", "not ie 11", "not ie_mob 11"]
           },
         },
       },

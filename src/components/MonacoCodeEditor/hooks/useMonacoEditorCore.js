@@ -1,38 +1,34 @@
-import React, { useCallback, useEffect } from 'react';
-import { listen } from '@codingame/monaco-jsonrpc';
-import * as monaco from 'monaco-editor';
+import { listen } from "@codingame/monaco-jsonrpc";
 import {
-  MonacoLanguageClient,
-  CloseAction,
-  ErrorAction,
-  MonacoServices,
-  createConnection,
-} from '@codingame/monaco-languageclient';
-import normalizeUrl from 'normalize-url';
-import ReconnectingWebSocket from 'reconnecting-websocket';
+  CloseAction, createConnection, ErrorAction, MonacoLanguageClient, MonacoServices
+} from "@codingame/monaco-languageclient";
+import * as monaco from "monaco-editor";
+import normalizeUrl from "normalize-url";
+import { useCallback } from "react";
+import ReconnectingWebSocket from "reconnecting-websocket";
 
-const SERVER_URL = '/sampleServer';
+const SERVER_URL = "/sampleServer";
 
 self.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
-    if (label === 'json') {
-      return './json.worker.bundle.js';
+    if (label === "json") {
+      return "./json.worker.bundle.js";
     }
-    if (label === 'css' || label === 'scss' || label === 'less') {
-      return './css.worker.bundle.js';
+    if (label === "css" || label === "scss" || label === "less") {
+      return "./css.worker.bundle.js";
     }
-    if (label === 'html' || label === 'handlebars' || label === 'razor') {
-      return './html.worker.bundle.js';
+    if (label === "html" || label === "handlebars" || label === "razor") {
+      return "./html.worker.bundle.js";
     }
-    if (label === 'typescript' || label === 'javascript') {
-      return './ts.worker.bundle.js';
+    if (label === "typescript" || label === "javascript") {
+      return "./ts.worker.bundle.js";
     }
-    return './editor.worker.bundle.js';
+    return "./editor.worker.bundle.js";
   },
 };
 
 const createUrl = (path) => {
-  const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  const protocol = location.protocol === "https:" ? "wss" : "ws";
   return normalizeUrl(`ws://localhost:3000/sampleServer`);
   // return normalizeUrl(
   //   `${protocol}://${location.host}${location.pathname}${path}`
@@ -52,12 +48,12 @@ const createWebSocket = (url) => {
 };
 
 const useMonacoEditor = () => {
-  const createLanguageClient = useCallback((connection) => {
+  const createLanguageClient = useCallback((connection, services) => {
     return new MonacoLanguageClient({
-      name: 'Sample Language Client',
+      name: "Sample Language Client",
       clientOptions: {
         // use a language id as a document selector
-        documentSelector: ['python'],
+        documentSelector: ["python"],
         // disable the default error handler
         errorHandler: {
           error: () => ErrorAction.Continue,
@@ -84,28 +80,14 @@ const useMonacoEditor = () => {
   const createEditor = useCallback((props) => {
     const { element, value, language, theme, options, disableMinimap } = props;
 
-    MonacoServices.install(monaco);
-    const webSocket = createWebSocket(createUrl(SERVER_URL));
-
-    // listen when the web socket is opened
-    listen({
-      webSocket,
-      onConnection: (connection) => {
-        // create and start the language client
-        const languageClient = createLanguageClient(connection);
-        const disposable = languageClient.start();
-        connection.onClose(() => disposable.dispose());
-      },
-    });
-
-    return monaco.editor.create(element, {
+    const editor = monaco.editor.create(element, {
       value: value,
       language: language,
       theme: theme,
-      'semanticHighlighting.enabled': true,
+      "semanticHighlighting.enabled": true,
       selectOnLineNumbers: true,
-      autoIndent: 'full',
-      lineNumbers: disableMinimap ? 'off' : 'on',
+      autoIndent: "full",
+      lineNumbers: disableMinimap ? "off" : "on",
       overviewRulerBorder: !disableMinimap,
       overviewRulerLanes: disableMinimap ? 0 : 3,
       minimap: {
@@ -113,6 +95,22 @@ const useMonacoEditor = () => {
       },
       ...options,
     });
+
+    const services = MonacoServices.install(monaco);
+    const webSocket = createWebSocket(createUrl(SERVER_URL));
+
+    // listen when the web socket is opened
+    listen({
+      webSocket,
+      onConnection: (connection) => {
+        // create and start the language client
+        const languageClient = createLanguageClient(connection, services);
+        const disposable = languageClient.start();
+        connection.onClose(() => disposable.dispose());
+      },
+    });
+
+    return editor;
   }, []);
 
   return { createEditor };
