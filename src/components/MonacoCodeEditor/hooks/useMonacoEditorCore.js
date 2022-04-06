@@ -1,13 +1,16 @@
 import { listen } from "@codingame/monaco-jsonrpc";
 import {
-  CloseAction, createConnection, ErrorAction, MonacoLanguageClient, MonacoServices
+  CloseAction,
+  createConnection,
+  ErrorAction,
+  MonacoLanguageClient,
+  MonacoServices,
 } from "@codingame/monaco-languageclient";
 import * as monaco from "monaco-editor";
 import normalizeUrl from "normalize-url";
 import { useCallback } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
-
-const SERVER_URL = "/sampleServer";
+import { PORT, SERVER_PATH } from "../../../constants/Constants";
 
 self.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
@@ -27,12 +30,11 @@ self.MonacoEnvironment = {
   },
 };
 
-const createUrl = (path) => {
+const createUrl = () => {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
-  return normalizeUrl(`ws://localhost:3000/sampleServer`);
-  // return normalizeUrl(
-  //   `${protocol}://${location.host}${location.pathname}${path}`
-  // );
+  return normalizeUrl(
+    `${protocol}://${location.hostname}:${PORT}/${SERVER_PATH}`
+  );
 };
 
 const createWebSocket = (url) => {
@@ -50,7 +52,7 @@ const createWebSocket = (url) => {
 const useMonacoEditor = () => {
   const createLanguageClient = useCallback((connection, services) => {
     return new MonacoLanguageClient({
-      name: "Sample Language Client",
+      name: "Python Language Client",
       clientOptions: {
         // use a language id as a document selector
         documentSelector: ["python"],
@@ -97,7 +99,7 @@ const useMonacoEditor = () => {
     });
 
     const services = MonacoServices.install(monaco);
-    const webSocket = createWebSocket(createUrl(SERVER_URL));
+    const webSocket = createWebSocket(createUrl());
 
     // listen when the web socket is opened
     listen({
