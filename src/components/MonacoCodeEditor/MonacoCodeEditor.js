@@ -1,49 +1,33 @@
-import React, { createRef, useRef } from "react";
-import PropTypes from "prop-types";
-import "./MonacoCodeEditor.css";
-import * as monaco from "monaco-editor";
+import * as monaco from "monaco-editor-core";
 import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
-
-/**
- * Create editor
- * @param {{element: HTMLElement, value: string, language: string, theme: string, options: object, disableMinimap: boolean}} props
- *  Props to be used to compose editor
- * @returns Monaco Editor object
- */
-const createEditor = (props) => {
-  const { element, value, language, theme, options, disableMinimap } = props;
-  return monaco.editor.create(element, {
-    value: value,
-    language: language,
-    theme: theme,
-    "semanticHighlighting.enabled": true,
-    selectOnLineNumbers: true,
-    autoIndent: "full",
-    lineNumbers: disableMinimap ? "off" : "on",
-    overviewRulerBorder: !disableMinimap,
-    overviewRulerLanes: disableMinimap ? 0 : 3,
-    minimap: {
-      enabled: !disableMinimap,
-    },
-    ...options,
-  });
-};
+import PropTypes from "prop-types";
+import React, { createRef, useRef } from "react";
+import useMonacoEditor from "./hooks/useMonacoEditor";
+import useMonacoEditorServer from "./hooks/useMonacoEditorCore";
+import "./MonacoCodeEditor.css";
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
   const editorRef = createRef();
   const debounceRef = useRef(null);
   const editor = useRef(null);
-
   // Props
-  const value = props.value;
-  const theme = props.theme;
-  const style = props.style;
-  const actions = props.actions;
-  const onSave = props.onSave;
-  const language = props.language;
-  const onChange = props.onChange;
-  const disableMinimap = props.disableMinimap;
+
+  const {
+    value,
+    theme,
+    style,
+    actions,
+    onSave,
+    language,
+    onChange,
+    disableMinimap,
+    useLanguageServer,
+  } = props;
+  // Hooks
+  const { createEditor } = useLanguageServer
+    ? useMonacoEditorServer()
+    : useMonacoEditor();
 
   //========================================================================================
   /*                                                                                      *
@@ -188,6 +172,7 @@ MonacoCodeEditor.propTypes = {
   disableMinimap: PropTypes.bool,
   value: PropTypes.string,
   style: PropTypes.object,
+  useLanguageServer: PropTypes.bool,
 };
 
 MonacoCodeEditor.defaultProps = {
@@ -196,10 +181,15 @@ MonacoCodeEditor.defaultProps = {
   language: "python",
   options: {},
   actions: [],
-  onChange: () => {},
-  onLoad: () => {},
+  onChange: () => {
+    /*  empty on purpose */
+  },
+  onLoad: () => {
+    /* empty on purpose */
+  },
   disableMinimap: false,
   style: { display: "flex", flexDirection: "column", flexGrow: 1 },
+  useLanguageServer: false,
 };
 
 export default MonacoCodeEditor;
