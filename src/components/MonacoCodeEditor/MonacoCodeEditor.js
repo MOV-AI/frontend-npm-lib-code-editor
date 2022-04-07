@@ -1,18 +1,16 @@
-import React, { createRef, useRef } from "react";
-import PropTypes from "prop-types";
-import "./MonacoCodeEditor.css";
-//import * as monaco from 'monaco-editor';
-import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
 import * as monaco from "monaco-editor-core";
-import useMonacoEditorServer from "./hooks/useMonacoEditorCore";
+import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
+import PropTypes from "prop-types";
+import React, { createRef, useRef } from "react";
 import useMonacoEditor from "./hooks/useMonacoEditor";
+import useMonacoEditorServer from "./hooks/useMonacoEditorCore";
+import "./MonacoCodeEditor.css";
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
   const editorRef = createRef();
   const debounceRef = useRef(null);
   const editor = useRef(null);
-
   // Props
 
   const {
@@ -183,8 +181,12 @@ MonacoCodeEditor.defaultProps = {
   language: "python",
   options: {},
   actions: [],
-  onChange: () => {},
-  onLoad: () => {},
+  onChange: () => {
+    /*  empty on purpose */
+  },
+  onLoad: () => {
+    /* empty on purpose */
+  },
   disableMinimap: false,
   style: { display: "flex", flexDirection: "column", flexGrow: 1 },
   useLanguageServer: false,

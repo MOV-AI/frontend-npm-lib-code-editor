@@ -1,4 +1,3 @@
-import React from 'react';
 import * as monaco from 'monaco-editor';
 
 const useMonacoEditor = () => {
