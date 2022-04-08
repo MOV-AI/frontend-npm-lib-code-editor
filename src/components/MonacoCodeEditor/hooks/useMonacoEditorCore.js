@@ -13,7 +13,7 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 import { PORT, SERVER_PATH } from "../../../constants/Constants";
 
 self.MonacoEnvironment = {
-  getWorkerUrl: function (moduleId, label) {
+  getWorkerUrl: function (_, label) {
     if (label === "json") {
       return "./json.worker.bundle.js";
     }
@@ -49,8 +49,8 @@ const createWebSocket = (url) => {
   return new ReconnectingWebSocket(url, [], socketOptions);
 };
 
-const useMonacoEditor = () => {
-  const createLanguageClient = useCallback((connection, services) => {
+const useMonacoEditorCore = () => {
+  const createLanguageClient = useCallback((connection) => {
     return new MonacoLanguageClient({
       name: "Python Language Client",
       clientOptions: {
@@ -60,6 +60,36 @@ const useMonacoEditor = () => {
         errorHandler: {
           error: () => ErrorAction.Continue,
           closed: () => CloseAction.DoNotRestart,
+        },
+
+        middleware: {
+          workspace: {
+            configuration: () => {
+              return [
+                {
+                  pylsp: {
+                    plugins: {
+                      preload: {
+                        module: [
+                          "count",
+                          "gd",
+                          "logger",
+                          "msg",
+                          "run",
+                          "Configuration",
+                          "FleetRobot",
+                          "PortName",
+                          "Robot",
+                          "Scene",
+                          "Var",
+                        ],
+                      },
+                    },
+                  },
+                },
+              ];
+            },
+          },
         },
       },
       // create a language client connection from the JSON RPC connection on demand
@@ -98,7 +128,7 @@ const useMonacoEditor = () => {
       ...options,
     });
 
-    const services = MonacoServices.install(monaco);
+    MonacoServices.install(monaco);
     const webSocket = createWebSocket(createUrl());
 
     // listen when the web socket is opened
@@ -106,7 +136,7 @@ const useMonacoEditor = () => {
       webSocket,
       onConnection: (connection) => {
         // create and start the language client
-        const languageClient = createLanguageClient(connection, services);
+        const languageClient = createLanguageClient(connection);
         const disposable = languageClient.start();
         connection.onClose(() => disposable.dispose());
       },
@@ -118,4 +148,4 @@ const useMonacoEditor = () => {
   return { createEditor };
 };
 
-export default useMonacoEditor;
+export default useMonacoEditorCore;
