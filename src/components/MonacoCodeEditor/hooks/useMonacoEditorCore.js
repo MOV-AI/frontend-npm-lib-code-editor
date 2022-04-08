@@ -61,6 +61,36 @@ const useMonacoEditorCore = () => {
           error: () => ErrorAction.Continue,
           closed: () => CloseAction.DoNotRestart,
         },
+
+        middleware: {
+          workspace: {
+            configuration: () => {
+              return [
+                {
+                  pylsp: {
+                    plugins: {
+                      preload: {
+                        module: [
+                          "count",
+                          "gd",
+                          "logger",
+                          "msg",
+                          "run",
+                          "Configuration",
+                          "FleetRobot",
+                          "PortName",
+                          "Robot",
+                          "Scene",
+                          "Var",
+                        ],
+                      },
+                    },
+                  },
+                },
+              ];
+            },
+          },
+        },
       },
       // create a language client connection from the JSON RPC connection on demand
       connectionProvider: {
