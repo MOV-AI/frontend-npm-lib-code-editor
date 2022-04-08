@@ -69,8 +69,9 @@ const useMonacoEditorCore = () => {
                 {
                   pylsp: {
                     plugins: {
-                      preload: {
-                        module: [
+                      flake8: {
+                        enabled: true,
+                        builtins: [
                           "count",
                           "gd",
                           "logger",
