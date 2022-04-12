@@ -61,29 +61,20 @@ const useMonacoEditorCore = () => {
           error: () => ErrorAction.Continue,
           closed: () => CloseAction.DoNotRestart,
         },
-
         middleware: {
           workspace: {
-            configuration: () => {
+            configuration: (params, token, configuration) => {
+              console.log("debug params", params);
+              console.log("debug token", token);
+              console.log("debug config", configuration);
               return [
                 {
                   pylsp: {
+                    configurationSources: ["pycodestyle", "flake8"],
                     plugins: {
                       flake8: {
                         enabled: true,
-                        builtins: [
-                          "count",
-                          "gd",
-                          "logger",
-                          "msg",
-                          "run",
-                          "Configuration",
-                          "FleetRobot",
-                          "PortName",
-                          "Robot",
-                          "Scene",
-                          "Var",
-                        ],
+                        config: "~/.config/flake8",
                       },
                     },
                   },
@@ -112,6 +103,38 @@ const useMonacoEditorCore = () => {
    */
   const createEditor = useCallback((props) => {
     const { element, value, language, theme, options, disableMinimap } = props;
+
+    function createProposals() {
+      return [
+        { label: "count" },
+        { label: "gd" },
+        {
+          label: "logger",
+          documentation: "movai logger object",
+          insertText: "logger",
+        },
+        { label: "msg" },
+        { label: "run" },
+        { label: "Configuration" },
+        {
+          label: "FleetRobot",
+          documentation: "Fleet of robots movai robots",
+          insertText: "FleetRobot",
+        },
+        { label: "PortName" },
+        { label: "Robot" },
+        { label: "Scene" },
+        { label: "Var" },
+      ];
+    }
+
+    monaco.languages.registerCompletionItemProvider("python", {
+      provideCompletionItems: function (model, position) {
+        return {
+          suggestions: createProposals(),
+        };
+      },
+    });
 
     const editor = monaco.editor.create(element, {
       value: value,
