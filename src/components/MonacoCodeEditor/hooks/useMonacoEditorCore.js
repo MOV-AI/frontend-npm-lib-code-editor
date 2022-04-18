@@ -61,28 +61,6 @@ const useMonacoEditorCore = () => {
           error: () => ErrorAction.Continue,
           closed: () => CloseAction.DoNotRestart,
         },
-        middleware: {
-          workspace: {
-            configuration: (params, token, configuration) => {
-              console.log("debug params", params);
-              console.log("debug token", token);
-              console.log("debug config", configuration);
-              return [
-                {
-                  pylsp: {
-                    configurationSources: ["pycodestyle", "flake8"],
-                    plugins: {
-                      flake8: {
-                        enabled: true,
-                        config: "~/.config/flake8",
-                      },
-                    },
-                  },
-                },
-              ];
-            },
-          },
-        },
       },
       // create a language client connection from the JSON RPC connection on demand
       connectionProvider: {
