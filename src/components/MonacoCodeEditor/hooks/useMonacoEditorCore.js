@@ -8,9 +8,15 @@ import {
 } from "@codingame/monaco-languageclient";
 import * as monaco from "monaco-editor";
 import normalizeUrl from "normalize-url";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { PORT, SERVER_PATH } from "../../../constants/Constants";
+
+//========================================================================================
+/*                                                                                      *
+ *                                         UTILS                                        *
+ *                                                                                      */
+//========================================================================================
 
 self.MonacoEnvironment = {
   getWorkerUrl: function (_, label) {
@@ -49,7 +55,87 @@ const createWebSocket = (url) => {
   return new ReconnectingWebSocket(url, [], socketOptions);
 };
 
+async function getBuiltins() {
+  const defaultMonacoKind = monaco.languages.CompletionItemKind.Value;
+  const kind2monacoKind = {
+    variable: monaco.languages.CompletionItemKind.Variable,
+    function: monaco.languages.CompletionItemKind.Function,
+    class: monaco.languages.CompletionItemKind.Class,
+  };
+  // const jsonBuiltins = {
+  //   count: { label: "count", detail: "", kind: "variable", methods: [] },
+  //   gd: { label: "gd", detail: "", kind: "variable", methods: [] },
+  //   logger: {
+  //     label: "logger",
+  //     detail: "movai logger object",
+  //     kind: "variable",
+  //     methods: ["info", "warning", "error"].map((label) => ({
+  //       label: label,
+  //       detail: `log in ${label} mode`,
+  //     })),
+  //   },
+  //   msg: { label: "msg", detail: "", kind: "function" },
+  //   run: { label: "run", detail: "", kind: "function" },
+  //   Configuration: { label: "Configuration", detail: "", kind: "class" },
+  //   FleetRobot: {
+  //     label: "FleetRobot",
+  //     detail: "Fleet of robots movai robots",
+  //     kind: "class",
+  //   },
+  //   PortName: { label: "PortName", detail: "", kind: "variable", methods: [] },
+  //   Robot: { label: "Robot", detail: "", kind: "class" },
+  //   Scene: { label: "Scene", detail: "", kind: "class" },
+  //   Var: { label: "Var", detail: "", kind: "class" },
+  // };
+  const jsonBuiltins = await fetch("/callback-builtins/").then((data) =>
+    data.json()
+  );
+  Object.keys(jsonBuiltins).forEach((k) => {
+    const builtin = jsonBuiltins[k];
+    if (!builtin.kind) {
+      delete jsonBuiltins[k];
+      return;
+    }
+    builtin.kind = kind2monacoKind[builtin.kind] || defaultMonacoKind;
+    builtin.insertText = builtin.label;
+  });
+  return jsonBuiltins;
+}
+/**
+ *
+ * @param {*} builtins
+ * @returns {undefined}
+ */
+function sendBuiltins2LanguageServer(builtins) {
+  const lsBuiltinsAddress = `${location.protocol}//${location.hostname}:${PORT}/builtins`;
+  console.log("debug ls built in address ", lsBuiltinsAddress);
+  fetch(lsBuiltinsAddress, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Object.values(builtins)),
+  })
+    .then((res) => res.text)
+    .then((text) => console.log("debug got response from lsp", text));
+}
+
+//========================================================================================
+/*                                                                                      *
+ *                                         MAIN                                         *
+ *                                                                                      */
+//========================================================================================
+
 const useMonacoEditorCore = () => {
+  const [builtins, setBuiltins] = useState([]);
+
+  useEffect(() => {
+    getBuiltins().then((actualBuiltins) => {
+      setBuiltins(actualBuiltins);
+      sendBuiltins2LanguageServer(actualBuiltins);
+    });
+  });
+
   const createLanguageClient = useCallback((connection) => {
     return new MonacoLanguageClient({
       name: "Python Language Client",
@@ -81,35 +167,53 @@ const useMonacoEditorCore = () => {
    */
   const createEditor = useCallback((props) => {
     const { element, value, language, theme, options, disableMinimap } = props;
-
-    function createProposals() {
-      return [
-        { label: "count" },
-        { label: "gd" },
-        {
-          label: "logger",
-          documentation: "movai logger object",
-          insertText: "logger",
-        },
-        { label: "msg" },
-        { label: "run" },
-        { label: "Configuration" },
-        {
-          label: "FleetRobot",
-          documentation: "Fleet of robots movai robots",
-          insertText: "FleetRobot",
-        },
-        { label: "PortName" },
-        { label: "Robot" },
-        { label: "Scene" },
-        { label: "Var" },
-      ];
+    function getSuggestions(model, position) {
+      if (builtins.length <= 0) return [];
+      // parse the current suggestion position
+      const textUntilPosition = model.getValueInRange({
+        startLineNumber: position.lineNumber,
+        startColumn: 1,
+        endLineNumber: position.lineNumber,
+        endColumn: position.column,
+      });
+      const word = model.getWordUntilPosition(position);
+      const range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+      console.log("debug suggestions textUntilPosition", textUntilPosition);
+      console.log("debug suggestions range", range);
+      const split = textUntilPosition.split(" ");
+      const lastWord = split[split.length - 1];
+      const builtinVars = Object.values(builtins).filter(
+        (builtin) =>
+          builtin.kind === monaco.languages.CompletionItemKind.Variable
+      );
+      let suggestionsForInstance = [];
+      for (let builtinVar of builtinVars) {
+        if (lastWord.match(`${builtinVar.label}.`)) {
+          suggestionsForInstance = builtinVar.methods.map((method) => ({
+            label: method.label,
+            insertText: method.label,
+            kind: monaco.languages.CompletionItemKind.method,
+            detail: method.detail,
+          }));
+        }
+      }
+      return suggestionsForInstance.length > 0
+        ? suggestionsForInstance
+        : Object.values(builtins).map((builtin) => ({
+            ...builtin,
+            range: range,
+          }));
     }
 
     monaco.languages.registerCompletionItemProvider("python", {
       provideCompletionItems: function (model, position) {
         return {
-          suggestions: createProposals(),
+          suggestions: getSuggestions(model, position),
         };
       },
     });

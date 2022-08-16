@@ -1,5 +1,6 @@
 import React from "react";
 import MonacoCodeEditor from "../components/MonacoCodeEditor/MonacoCodeEditor.js";
+import { withAuthentication } from "@mov-ai/mov-fe-lib-react";
 
 export default {
   title: "Monaco Code Editor",
@@ -12,11 +13,19 @@ export default {
   },
 };
 
-const Template = (args) => (
-  <div style={{ height: "90vh" }}>
-    <MonacoCodeEditor {...args} useLanguageServer />
-  </div>
-);
+const Template = (args) => {
+  //   const A = withAuthentication(
+  //     <div style={{ height: "90vh" }}>
+  //       <MonacoCodeEditor {...args} useLanguageServer />
+  //     </div>
+  //   );
+  //   return <A></A>;
+  return (
+    <div style={{ height: "90vh" }}>
+      <MonacoCodeEditor {...args} useLanguageServer />
+    </div>
+  );
+};
 
 export const Python = Template.bind({});
 Python.args = {
