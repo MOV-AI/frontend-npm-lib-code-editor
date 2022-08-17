@@ -6,9 +6,10 @@ import {
   MonacoLanguageClient,
   MonacoServices,
 } from "@codingame/monaco-languageclient";
+import { Rest } from "@mov-ai/mov-fe-lib-core";
 import * as monaco from "monaco-editor";
 import normalizeUrl from "normalize-url";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { PORT, SERVER_PATH } from "../../../constants/Constants";
 
@@ -62,9 +63,9 @@ async function getBuiltins() {
     function: monaco.languages.CompletionItemKind.Function,
     class: monaco.languages.CompletionItemKind.Class,
   };
-  const jsonBuiltins = await fetch("/api/v1/callback-builtins/").then((data) =>
-    data.json()
-  );
+  const jsonBuiltins = await Rest.get({
+    path: "v1/callback-builtins/",
+  });
   Object.keys(jsonBuiltins).forEach((k) => {
     const builtin = jsonBuiltins[k];
     if (!builtin.kind) {
