@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import withMock from "storybook-addon-mock";
 import MonacoCodeEditor from "../components/MonacoCodeEditor/MonacoCodeEditor.js";
-import { withAuthentication } from "@mov-ai/mov-fe-lib-react";
+import mockBuiltins from "./builtinData.mock";
 
 export default {
   title: "Monaco Code Editor",
   component: MonacoCodeEditor,
+  decorators: [withMock],
   argTypes: {
     theme: {
       options: ["vs-dark", "light"],
@@ -14,12 +16,6 @@ export default {
 };
 
 const Template = (args) => {
-  //   const A = withAuthentication(
-  //     <div style={{ height: "90vh" }}>
-  //       <MonacoCodeEditor {...args} useLanguageServer />
-  //     </div>
-  //   );
-  //   return <A></A>;
   return (
     <div style={{ height: "90vh" }}>
       <MonacoCodeEditor {...args} useLanguageServer />
@@ -28,6 +24,26 @@ const Template = (args) => {
 };
 
 export const Python = Template.bind({});
+Python.parameters = {
+  mockData: [
+    {
+      url: "/api/v1/callback-builtins/",
+      method: "GET",
+      status: 200,
+      response: (request) => {
+        const { url, method, body, searchParams } = request;
+        console.log(
+          "debug mock api storybook",
+          url,
+          method,
+          body,
+          searchParams
+        );
+        return mockBuiltins;
+      },
+    },
+  ],
+};
 Python.args = {
   style: { minHeight: "90vh" },
   language: "python",

@@ -62,32 +62,7 @@ async function getBuiltins() {
     function: monaco.languages.CompletionItemKind.Function,
     class: monaco.languages.CompletionItemKind.Class,
   };
-  // const jsonBuiltins = {
-  //   count: { label: "count", detail: "", kind: "variable", methods: [] },
-  //   gd: { label: "gd", detail: "", kind: "variable", methods: [] },
-  //   logger: {
-  //     label: "logger",
-  //     detail: "movai logger object",
-  //     kind: "variable",
-  //     methods: ["info", "warning", "error"].map((label) => ({
-  //       label: label,
-  //       detail: `log in ${label} mode`,
-  //     })),
-  //   },
-  //   msg: { label: "msg", detail: "", kind: "function" },
-  //   run: { label: "run", detail: "", kind: "function" },
-  //   Configuration: { label: "Configuration", detail: "", kind: "class" },
-  //   FleetRobot: {
-  //     label: "FleetRobot",
-  //     detail: "Fleet of robots movai robots",
-  //     kind: "class",
-  //   },
-  //   PortName: { label: "PortName", detail: "", kind: "variable", methods: [] },
-  //   Robot: { label: "Robot", detail: "", kind: "class" },
-  //   Scene: { label: "Scene", detail: "", kind: "class" },
-  //   Var: { label: "Var", detail: "", kind: "class" },
-  // };
-  const jsonBuiltins = await fetch("/callback-builtins/").then((data) =>
+  const jsonBuiltins = await fetch("/api/v1/callback-builtins/").then((data) =>
     data.json()
   );
   Object.keys(jsonBuiltins).forEach((k) => {
@@ -108,7 +83,7 @@ async function getBuiltins() {
  */
 function sendBuiltins2LanguageServer(builtins) {
   const lsBuiltinsAddress = `${location.protocol}//${location.hostname}:${PORT}/builtins`;
-  console.log("debug ls built in address ", lsBuiltinsAddress);
+  console.debug("Sending to language server builtins", lsBuiltinsAddress);
   fetch(lsBuiltinsAddress, {
     method: "POST",
     headers: {
@@ -117,7 +92,7 @@ function sendBuiltins2LanguageServer(builtins) {
     body: JSON.stringify(Object.values(builtins)),
   })
     .then((res) => res.text)
-    .then((text) => console.log("debug got response from lsp", text));
+    .then((text) => console.debug("Got response from language server", text));
 }
 
 //========================================================================================
@@ -127,14 +102,13 @@ function sendBuiltins2LanguageServer(builtins) {
 //========================================================================================
 
 const useMonacoEditorCore = () => {
-  const [builtins, setBuiltins] = useState([]);
-
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
-      setBuiltins(actualBuiltins);
+      console.debug("debug builtins", actualBuiltins);
+      BUILTINS = actualBuiltins;
       sendBuiltins2LanguageServer(actualBuiltins);
     });
-  });
+  }, []);
 
   const createLanguageClient = useCallback((connection) => {
     return new MonacoLanguageClient({
@@ -168,7 +142,7 @@ const useMonacoEditorCore = () => {
   const createEditor = useCallback((props) => {
     const { element, value, language, theme, options, disableMinimap } = props;
     function getSuggestions(model, position) {
-      if (builtins.length <= 0) return [];
+      if (!BUILTINS) return [];
       // parse the current suggestion position
       const textUntilPosition = model.getValueInRange({
         startLineNumber: position.lineNumber,
@@ -183,18 +157,16 @@ const useMonacoEditorCore = () => {
         startColumn: word.startColumn,
         endColumn: word.endColumn,
       };
-      console.log("debug suggestions textUntilPosition", textUntilPosition);
-      console.log("debug suggestions range", range);
       const split = textUntilPosition.split(" ");
       const lastWord = split[split.length - 1];
-      const builtinVars = Object.values(builtins).filter(
+      const builtinVars = Object.values(BUILTINS).filter(
         (builtin) =>
           builtin.kind === monaco.languages.CompletionItemKind.Variable
       );
-      let suggestionsForInstance = [];
+      let suggestionsForObject = [];
       for (let builtinVar of builtinVars) {
         if (lastWord.match(`${builtinVar.label}.`)) {
-          suggestionsForInstance = builtinVar.methods.map((method) => ({
+          suggestionsForObject = builtinVar.methods.map((method) => ({
             label: method.label,
             insertText: method.label,
             kind: monaco.languages.CompletionItemKind.method,
@@ -202,9 +174,9 @@ const useMonacoEditorCore = () => {
           }));
         }
       }
-      return suggestionsForInstance.length > 0
-        ? suggestionsForInstance
-        : Object.values(builtins).map((builtin) => ({
+      return suggestionsForObject.length > 0
+        ? suggestionsForObject
+        : Object.values(BUILTINS).map((builtin) => ({
             ...builtin,
             range: range,
           }));
@@ -212,6 +184,10 @@ const useMonacoEditorCore = () => {
 
     monaco.languages.registerCompletionItemProvider("python", {
       provideCompletionItems: function (model, position) {
+        console.debug(
+          "debug provide completion item",
+          getSuggestions(model, position)
+        );
         return {
           suggestions: getSuggestions(model, position),
         };
@@ -253,5 +229,10 @@ const useMonacoEditorCore = () => {
 
   return { createEditor };
 };
+
+/**
+ * It had to be this way, it didn't work as a React.useState.
+ */
+let BUILTINS = undefined;
 
 export default useMonacoEditorCore;
