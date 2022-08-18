@@ -63,19 +63,23 @@ async function getBuiltins() {
     function: monaco.languages.CompletionItemKind.Function,
     class: monaco.languages.CompletionItemKind.Class,
   };
-  const jsonBuiltins = await Rest.get({
-    path: "v1/callback-builtins/",
-  });
-  Object.keys(jsonBuiltins).forEach((k) => {
-    const builtin = jsonBuiltins[k];
-    if (!builtin.kind) {
-      delete jsonBuiltins[k];
-      return;
-    }
-    builtin.kind = kind2monacoKind[builtin.kind] || defaultMonacoKind;
-    builtin.insertText = builtin.label;
-  });
-  return jsonBuiltins;
+  try {
+    const jsonBuiltins = await Rest.get({
+      path: "v1/callback-builtins/",
+    });
+    Object.keys(jsonBuiltins).forEach((k) => {
+      const builtin = jsonBuiltins[k];
+      if (!builtin.kind) {
+        delete jsonBuiltins[k];
+        return;
+      }
+      builtin.kind = kind2monacoKind[builtin.kind] || defaultMonacoKind;
+      builtin.insertText = builtin.label;
+    });
+    return jsonBuiltins;
+  } catch (error) {
+    console.log("caught error ", error);
+  }
 }
 /**
  *
