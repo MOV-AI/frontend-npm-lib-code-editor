@@ -94,7 +94,9 @@ function sendBuiltins2LanguageServer(builtins) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(Object.values(builtins)),
+    body: JSON.stringify(
+      Object.values(builtins).map(({ label }) => ({ label: label }))
+    ),
   })
     .then((res) => res.text)
     .then((text) => console.debug("Got response from language server", text));
@@ -171,12 +173,19 @@ const useMonacoEditorCore = () => {
       let suggestionsForObject = [];
       for (let builtinVar of builtinVars) {
         if (lastWord.match(`${builtinVar.label}.`)) {
-          suggestionsForObject = builtinVar.methods.map((method) => ({
-            label: method.label,
-            insertText: method.label,
-            kind: monaco.languages.CompletionItemKind.method,
-            detail: method.detail,
-          }));
+          suggestionsForObject = builtinVar.methods.map(
+            ({ label, documentation }) => ({
+              label: label,
+              insertText: label,
+              kind: monaco.languages.CompletionItemKind.method,
+              documentation: documentation,
+              sortText: /^_{1,2}\w+_{1,2}$/.test(label)
+                ? "z" + label
+                : /^_\w+$/.test(label)
+                ? "y" + label
+                : label,
+            })
+          );
         }
       }
       return suggestionsForObject.length > 0
