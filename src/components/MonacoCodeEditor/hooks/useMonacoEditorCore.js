@@ -4,7 +4,7 @@ import {
   createConnection,
   ErrorAction,
   MonacoLanguageClient,
-  MonacoServices
+  MonacoServices,
 } from "@codingame/monaco-languageclient";
 import { Rest } from "@mov-ai/mov-fe-lib-core";
 import * as monaco from "monaco-editor";
@@ -250,17 +250,21 @@ const useMonacoEditorCore = () => {
     const webSocket = createWebSocket(createUrl());
 
     // listen when the web socket is opened
-    listen({
-      webSocket,
-      onConnection: (connection) => {
-        // create and start the language client
-        const languageClient = createLanguageClient(connection);
-        const disposable = languageClient.start();
-        connection.onClose(() => {
-          disposable.dispose();
-        });
-      },
-    });
+    if (!isClientConnected) {
+      listen({
+        webSocket,
+        onConnection: (connection) => {
+          // create and start the language client
+          const languageClient = createLanguageClient(connection);
+          const disposable = languageClient.start();
+          connection.onClose(() => {
+            disposable.dispose();
+            isClientConnected = false;
+          });
+        },
+      });
+      isClientConnected = true;
+    }
 
     return editor;
   }, []);
@@ -273,4 +277,5 @@ const useMonacoEditorCore = () => {
  */
 let BUILTINS = undefined;
 let isLanguageCompletionRegistered = false;
+let isClientConnected = false;
 export default useMonacoEditorCore;
