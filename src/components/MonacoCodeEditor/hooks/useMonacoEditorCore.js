@@ -12,6 +12,7 @@ import normalizeUrl from "normalize-url";
 import { useCallback, useEffect } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { PORT, SERVER_PATH } from "../../../constants/Constants";
+import isEqual from "lodash/isEqual";
 
 //========================================================================================
 /*                                                                                      *
@@ -111,6 +112,8 @@ function sendBuiltins2LanguageServer(builtins) {
 //========================================================================================
 
 const useMonacoEditorCore = () => {
+  [];
+
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
       BUILTINS = actualBuiltins;
@@ -158,16 +161,16 @@ const useMonacoEditorCore = () => {
     } = props;
     function getSuggestions(model, position) {
       if (!BUILTINS) return [];
-      if (!areBuiltinsSend) {
-        BUILTINS = {
-          ...BUILTINS,
-          ...builtins.map((b) => ({
-            label: b,
-            insertText: b,
-          })),
-        };
+      const newBuiltins = {
+        ...BUILTINS,
+        ...builtins.map((b) => ({
+          label: b,
+          insertText: b,
+        })),
+      };
+      if (!isEqual(newBuiltins, BUILTINS)) {
+        BUILTINS = newBuiltins;
         sendBuiltins2LanguageServer(BUILTINS);
-        areBuiltinsSend = true;
       }
       // parse the current suggestion position
       const textUntilPosition = model.getValueInRange({
@@ -207,25 +210,30 @@ const useMonacoEditorCore = () => {
           );
         }
       }
+
+      const defaultSuggestions = Object.values(BUILTINS).map((builtin) => ({
+        ...builtin,
+        range: range,
+      }));
+
       return suggestionsForObject.length > 0
         ? suggestionsForObject
-        : Object.values(BUILTINS).map((builtin) => ({
-            ...builtin,
-            range: range,
-          }));
+        : defaultSuggestions;
     }
-
-    monaco.languages.registerCompletionItemProvider("python", {
-      provideCompletionItems: function (model, position) {
-        console.debug(
-          "debug provide completion item",
-          getSuggestions(model, position)
-        );
-        return {
-          suggestions: getSuggestions(model, position),
-        };
-      },
-    });
+    if (!isCompletionItemProviderRegister) {
+      monaco.languages.registerCompletionItemProvider("python", {
+        provideCompletionItems: function (model, position) {
+          console.debug(
+            "debug provide completion item",
+            getSuggestions(model, position)
+          );
+          return {
+            suggestions: getSuggestions(model, position),
+          };
+        },
+      });
+      isCompletionItemProviderRegister = true;
+    }
 
     const editor = monaco.editor.create(element, {
       value: value,
@@ -267,6 +275,5 @@ const useMonacoEditorCore = () => {
  * It had to be this way, it didn't work as a React.useState.
  */
 let BUILTINS = undefined;
-let areBuiltinsSend = false;
-
+let isCompletionItemProviderRegister = false;
 export default useMonacoEditorCore;
