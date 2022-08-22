@@ -4,7 +4,7 @@ import {
   createConnection,
   ErrorAction,
   MonacoLanguageClient,
-  MonacoServices,
+  MonacoServices
 } from "@codingame/monaco-languageclient";
 import { Rest } from "@mov-ai/mov-fe-lib-core";
 import * as monaco from "monaco-editor";
@@ -12,7 +12,6 @@ import normalizeUrl from "normalize-url";
 import { useCallback, useEffect } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { PORT, SERVER_PATH } from "../../../constants/Constants";
-import isEqual from "lodash/isEqual";
 
 //========================================================================================
 /*                                                                                      *
@@ -105,6 +104,56 @@ function sendBuiltins2LanguageServer(builtins) {
     .then((text) => console.debug("Got response from language server", text));
 }
 
+function getSuggestions(model, position) {
+  if (!BUILTINS) return [];
+  // parse the current suggestion position
+  const textUntilPosition = model.getValueInRange({
+    startLineNumber: position.lineNumber,
+    startColumn: 1,
+    endLineNumber: position.lineNumber,
+    endColumn: position.column,
+  });
+  const word = model.getWordUntilPosition(position);
+  const range = {
+    startLineNumber: position.lineNumber,
+    endLineNumber: position.lineNumber,
+    startColumn: word.startColumn,
+    endColumn: word.endColumn,
+  };
+  const split = textUntilPosition.split(" ");
+  const lastWord = split[split.length - 1];
+  const builtinVars = Object.values(BUILTINS).filter(
+    (builtin) => builtin.kind === monaco.languages.CompletionItemKind.Variable
+  );
+  let suggestionsForObject = [];
+  for (let builtinVar of builtinVars) {
+    if (lastWord.match(`${builtinVar.label}.`)) {
+      suggestionsForObject = builtinVar.methods.map(
+        ({ label, documentation }) => ({
+          label: label,
+          insertText: label,
+          kind: monaco.languages.CompletionItemKind.method,
+          documentation: documentation,
+          sortText: /^_{1,2}\w+_{1,2}$/.test(label)
+            ? "z" + label
+            : /^_\w+$/.test(label)
+            ? "y" + label
+            : label,
+        })
+      );
+    }
+  }
+
+  const defaultSuggestions = Object.values(BUILTINS).map((builtin) => ({
+    ...builtin,
+    range: range,
+  }));
+
+  return suggestionsForObject.length > 0
+    ? suggestionsForObject
+    : defaultSuggestions;
+}
+
 //========================================================================================
 /*                                                                                      *
  *                                         MAIN                                         *
@@ -112,11 +161,10 @@ function sendBuiltins2LanguageServer(builtins) {
 //========================================================================================
 
 const useMonacoEditorCore = () => {
-  [];
-
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
-      BUILTINS = actualBuiltins;
+      BUILTINS = { ...BUILTINS, ...actualBuiltins };
+      sendBuiltins2LanguageServer(BUILTINS);
     });
   }, []);
 
@@ -159,68 +207,15 @@ const useMonacoEditorCore = () => {
       disableMinimap,
       builtins,
     } = props;
-    function getSuggestions(model, position) {
-      if (!BUILTINS) return [];
-      const newBuiltins = {
-        ...BUILTINS,
-        ...builtins.map((b) => ({
-          label: b,
-          insertText: b,
-        })),
-      };
-      if (!isEqual(newBuiltins, BUILTINS)) {
-        BUILTINS = newBuiltins;
-        sendBuiltins2LanguageServer(BUILTINS);
-      }
-      // parse the current suggestion position
-      const textUntilPosition = model.getValueInRange({
-        startLineNumber: position.lineNumber,
-        startColumn: 1,
-        endLineNumber: position.lineNumber,
-        endColumn: position.column,
-      });
-      const word = model.getWordUntilPosition(position);
-      const range = {
-        startLineNumber: position.lineNumber,
-        endLineNumber: position.lineNumber,
-        startColumn: word.startColumn,
-        endColumn: word.endColumn,
-      };
-      const split = textUntilPosition.split(" ");
-      const lastWord = split[split.length - 1];
-      const builtinVars = Object.values(BUILTINS).filter(
-        (builtin) =>
-          builtin.kind === monaco.languages.CompletionItemKind.Variable
-      );
-      let suggestionsForObject = [];
-      for (let builtinVar of builtinVars) {
-        if (lastWord.match(`${builtinVar.label}.`)) {
-          suggestionsForObject = builtinVar.methods.map(
-            ({ label, documentation }) => ({
-              label: label,
-              insertText: label,
-              kind: monaco.languages.CompletionItemKind.method,
-              documentation: documentation,
-              sortText: /^_{1,2}\w+_{1,2}$/.test(label)
-                ? "z" + label
-                : /^_\w+$/.test(label)
-                ? "y" + label
-                : label,
-            })
-          );
-        }
-      }
 
-      const defaultSuggestions = Object.values(BUILTINS).map((builtin) => ({
-        ...builtin,
-        range: range,
-      }));
-
-      return suggestionsForObject.length > 0
-        ? suggestionsForObject
-        : defaultSuggestions;
-    }
-    if (!isCompletionItemProviderRegister) {
+    BUILTINS = {
+      ...BUILTINS,
+      ...builtins.map((b) => ({
+        label: b,
+        insertText: b,
+      })),
+    };
+    if (!isLanguageCompletionRegistered) {
       monaco.languages.registerCompletionItemProvider("python", {
         provideCompletionItems: function (model, position) {
           console.debug(
@@ -232,7 +227,7 @@ const useMonacoEditorCore = () => {
           };
         },
       });
-      isCompletionItemProviderRegister = true;
+      isLanguageCompletionRegistered = true;
     }
 
     const editor = monaco.editor.create(element, {
@@ -261,7 +256,9 @@ const useMonacoEditorCore = () => {
         // create and start the language client
         const languageClient = createLanguageClient(connection);
         const disposable = languageClient.start();
-        connection.onClose(() => disposable.dispose());
+        connection.onClose(() => {
+          disposable.dispose();
+        });
       },
     });
 
@@ -275,5 +272,5 @@ const useMonacoEditorCore = () => {
  * It had to be this way, it didn't work as a React.useState.
  */
 let BUILTINS = undefined;
-let isCompletionItemProviderRegister = false;
+let isLanguageCompletionRegistered = false;
 export default useMonacoEditorCore;
