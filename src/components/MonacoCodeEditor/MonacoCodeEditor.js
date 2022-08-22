@@ -23,6 +23,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     onChange,
     disableMinimap,
     useLanguageServer,
+    builtins,
   } = props;
   // Hooks
   const { createEditor } = useLanguageServer
@@ -68,6 +69,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
       style,
       language,
       disableMinimap,
+      builtins,
       options: { ...props.options },
     });
 
@@ -173,6 +175,7 @@ MonacoCodeEditor.propTypes = {
   value: PropTypes.string,
   style: PropTypes.object,
   useLanguageServer: PropTypes.bool,
+  builtins: PropTypes.object,
 };
 
 MonacoCodeEditor.defaultProps = {
@@ -190,6 +193,7 @@ MonacoCodeEditor.defaultProps = {
   disableMinimap: false,
   style: { display: "flex", flexDirection: "column", flexGrow: 1 },
   useLanguageServer: false,
+  builtins: [],
 };
 
 export default MonacoCodeEditor;

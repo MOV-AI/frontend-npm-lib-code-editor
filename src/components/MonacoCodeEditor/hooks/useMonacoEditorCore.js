@@ -107,9 +107,7 @@ function sendBuiltins2LanguageServer(builtins) {
 const useMonacoEditorCore = () => {
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
-      console.debug("debug builtins", actualBuiltins);
       BUILTINS = actualBuiltins;
-      sendBuiltins2LanguageServer(actualBuiltins);
     });
   }, []);
 
@@ -143,9 +141,28 @@ const useMonacoEditorCore = () => {
    * @returns Monaco Editor object
    */
   const createEditor = useCallback((props) => {
-    const { element, value, language, theme, options, disableMinimap } = props;
+    const {
+      element,
+      value,
+      language,
+      theme,
+      options,
+      disableMinimap,
+      builtins,
+    } = props;
     function getSuggestions(model, position) {
       if (!BUILTINS) return [];
+      if (!areBuiltinsSend) {
+        BUILTINS = {
+          ...BUILTINS,
+          ...builtins.map((b) => ({
+            label: b,
+            insertText: b,
+          })),
+        };
+        sendBuiltins2LanguageServer(BUILTINS);
+        areBuiltinsSend = true;
+      }
       // parse the current suggestion position
       const textUntilPosition = model.getValueInRange({
         startLineNumber: position.lineNumber,
@@ -244,5 +261,6 @@ const useMonacoEditorCore = () => {
  * It had to be this way, it didn't work as a React.useState.
  */
 let BUILTINS = undefined;
+let areBuiltinsSend = false;
 
 export default useMonacoEditorCore;
