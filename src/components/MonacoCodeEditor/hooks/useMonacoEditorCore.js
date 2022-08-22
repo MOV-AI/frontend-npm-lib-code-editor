@@ -84,15 +84,21 @@ async function getBuiltins() {
  */
 function sendBuiltins2LanguageServer(builtins) {
   const lsBuiltinsAddress = `${location.protocol}//${location.hostname}:${PORT}/builtins`;
-  console.debug("Sending to language server builtins", lsBuiltinsAddress);
+  const builtinsJson = Object.values(builtins).map(({ label }) => ({
+    label: label,
+  }));
+
+  console.debug(
+    "Sending to language server builtins",
+    lsBuiltinsAddress,
+    builtinsJson
+  );
   fetch(lsBuiltinsAddress, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(
-      Object.values(builtins).map(({ label }) => ({ label: label }))
-    ),
+    body: JSON.stringify(builtinsJson),
   })
     .then((res) => res.text)
     .then((text) => console.debug("Got response from language server", text));
