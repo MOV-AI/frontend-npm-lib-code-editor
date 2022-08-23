@@ -73,3 +73,4 @@ module.exports = {
     extensions: ['.js', '.json', '.ttf'],
   },
 };
+
