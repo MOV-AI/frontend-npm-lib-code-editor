@@ -1,6 +1,6 @@
 {
   "name": "@mov-ai/mov-fe-lib-code-editor",
-  "version": "1.0.8-0",
+  "version": "1.0.8-1",
   "description": "Mov.ai's library for Code Editors",
   "main": "./dist/index.js",
   "scripts": {
