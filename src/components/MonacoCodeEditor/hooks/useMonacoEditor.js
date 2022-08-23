@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor';
+import * as monaco from "monaco-editor";
 
 const useMonacoEditor = () => {
   /**
@@ -14,10 +14,10 @@ const useMonacoEditor = () => {
       value: value,
       language: language,
       theme: theme,
-      'semanticHighlighting.enabled': true,
+      "semanticHighlighting.enabled": true,
       selectOnLineNumbers: true,
-      autoIndent: 'full',
-      lineNumbers: disableMinimap ? 'off' : 'on',
+      autoIndent: "full",
+      lineNumbers: disableMinimap ? "off" : "on",
       overviewRulerBorder: !disableMinimap,
       overviewRulerLanes: disableMinimap ? 0 : 3,
       minimap: {
