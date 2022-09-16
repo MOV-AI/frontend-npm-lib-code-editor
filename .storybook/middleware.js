@@ -22,4 +22,14 @@ module.exports = function (router) {
       }
     )
   );
+  // to test language server locally
+  // router.use(
+  //   "/lsp/**",
+  //   createProxyMiddleware({
+  //     target: "http://localhost:3333",
+  //     ws: true,
+  //     logLevel: "error",
+  //     secure: false,
+  //   })
+  // );
 };
