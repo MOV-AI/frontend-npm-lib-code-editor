@@ -1,6 +1,6 @@
 {
   "name": "@mov-ai/mov-fe-lib-code-editor",
-  "version": "1.0.8-1",
+  "version": "1.0.8-2",
   "description": "Mov.ai's library for Code Editors",
   "main": "./dist/index.js",
   "scripts": {
@@ -37,7 +37,6 @@
   "homepage": "https://github.com/MOV-AI/frontend-npm-lib-code-editor#readme",
   "dependencies": {
     "@codingame/monaco-jsonrpc": "^0.3.1",
-    "@mov-ai/mov-fe-lib-core": "^1.1.1-11",
     "monaco-editor": "^0.31.1",
     "monaco-editor-core": "^0.31.1",
     "normalize-url": "^7.0.3",
@@ -64,6 +63,7 @@
     "@storybook/manager-webpack5": "^6.4.18",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
+    "@mov-ai/mov-fe-lib-core": "^1.2.0-0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
@@ -87,6 +87,7 @@
   "peerDependencies": {
     "@codingame/monaco-languageclient": "^0.17.3",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "@mov-ai/mov-fe-lib-core": "^1.2.0-0"
   }
 }
