@@ -11,7 +11,6 @@ import * as monaco from "monaco-editor";
 import normalizeUrl from "normalize-url";
 import { useCallback, useEffect } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
-import { PORT, SERVER_PATH } from "../../../constants/Constants";
 
 //========================================================================================
 /*                                                                                      *
@@ -39,9 +38,7 @@ self.MonacoEnvironment = {
 
 const createUrl = () => {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
-  return normalizeUrl(
-    `${protocol}://${location.hostname}:${PORT}/${SERVER_PATH}`
-  );
+  return normalizeUrl(`${protocol}://${location.host}/lsp/languageServer`);
 };
 
 const createWebSocket = (url) => {
@@ -83,7 +80,7 @@ async function getBuiltins() {
  * @returns {undefined}
  */
 function sendBuiltins2LanguageServer(builtins) {
-  const lsBuiltinsAddress = `${location.protocol}//${location.hostname}:${PORT}/builtins`;
+  const lsBuiltinsAddress = `${location.protocol}//${location.host}/lsp/builtins`;
   const builtinsJson = Object.values(builtins).map(({ label }) => ({
     label: label,
   }));
