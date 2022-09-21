@@ -14,7 +14,6 @@ module.exports = function (router) {
         "/static/maps/**",
         "/static/meshes/**",
         "/static/point_clouds/**",
-        "/lsp/**",
       ],
       {
         target: "https://localhost",
@@ -24,6 +23,19 @@ module.exports = function (router) {
       }
     )
   );
+
+  // to test language server locally
+  router.use(
+    "/lsp/**",
+    createProxyMiddleware({
+      target: "http://localhost:3333",
+      ws: true,
+      logLevel: "error",
+      secure: false,
+      changeOrigin: true,
+    })
+  );
+
   // using movai-flow dev
   // router.use(
   //   createProxyMiddleware(
