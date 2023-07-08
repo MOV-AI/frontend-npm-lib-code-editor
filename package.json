@@ -70,7 +70,7 @@
     "http-proxy-middleware": "^2.0.6",
     "monaco-css": "^3.8.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "path": "^0.12.7",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
