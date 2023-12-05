@@ -1,6 +1,6 @@
 {
   "name": "@mov-ai/mov-fe-lib-code-editor",
-  "version": "1.0.8-2",
+  "version": "1.0.9-1",
   "description": "Mov.ai's library for Code Editors",
   "main": "./dist/index.js",
   "scripts": {
@@ -63,7 +63,7 @@
     "@storybook/manager-webpack5": "^6.4.18",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
-    "@mov-ai/mov-fe-lib-core": "^1.2.0-0",
+    "@mov-ai/mov-fe-lib-core": "^1.2.0-1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
@@ -88,6 +88,6 @@
     "@codingame/monaco-languageclient": "^0.17.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "@mov-ai/mov-fe-lib-core": "^1.2.0-0"
+    "@mov-ai/mov-fe-lib-core": "^1.2.0-1"
   }
 }
