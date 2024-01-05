@@ -53,7 +53,7 @@
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
     "@codingame/monaco-languageclient": "^0.17.3",
-    "@mov-ai/mov-fe-lib-react": "^1.1.1-12",
+    "@mov-ai/mov-fe-lib-react": "^1.2.0-3",
     "@storybook/addon-knobs": "^6.3.1",
     "@storybook/addons": "^6.3.8",
     "@storybook/api": "^6.3.8",
