@@ -55,7 +55,7 @@
     "@babel/preset-react": "^7.14.5",
     "@codingame/monaco-languageclient": "^0.17.3",
     "@mov-ai/mov-fe-lib-core": "^1.2.0-7",
-    "@mov-ai/mov-fe-lib-react": "^1.3.0-5",
+    "@mov-ai/mov-fe-lib-react": "^1.3.0-10",
     "@storybook/addon-knobs": "^6.3.1",
     "@storybook/addons": "^6.3.8",
     "@storybook/api": "^6.3.8",
@@ -98,6 +98,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@mov-ai/mov-fe-lib-core": "^1.2.0-7",
-    "@mov-ai/mov-fe-lib-react": "^1.3.0-5"
+    "@mov-ai/mov-fe-lib-react": "^1.3.0-10"
   }
 }
