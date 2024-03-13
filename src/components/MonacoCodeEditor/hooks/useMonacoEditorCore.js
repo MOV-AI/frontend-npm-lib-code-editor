@@ -24,15 +24,15 @@ self.MonacoEnvironment = {
       return pkg.publicPath + "json-worker.js";
     }
     if (label === "css" || label === "scss" || label === "less") {
-      return pkg.publicPath + "css-worker.js";
+      return __webpack_public_path__ + "css-worker.js";
     }
     if (label === "html" || label === "handlebars" || label === "razor") {
-      return pkg.publicPath + "html.worker.js";
+      return __webpack_public_path__ + "html.worker.js";
     }
     if (label === "typescript" || label === "javascript") {
-      return pkg.publicPath + "ts-worker.js";
+      return __webpack_public_path__ + "ts-worker.js";
     }
-    return pkg.publicPath + "editor-worker.js";
+    return __webpack_public_path__ + "editor-worker.js";
   },
 };
 
