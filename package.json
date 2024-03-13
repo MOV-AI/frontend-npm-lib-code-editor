@@ -14,6 +14,7 @@
     "@mov-ai/mov-fe-lib-core": "global Movai",
     "@mov-ai/mov-fe-lib-react": "global MovaiReact"
   },
+  "publicPath": "/static/mov-fe-app-ide/lib/@mov-ai/mov-fe-lib-code-editor/dist/",
   "scripts": {
     "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
     "test": "echo no tests",
@@ -71,7 +72,7 @@
     "@storybook/manager-webpack5": "^6.4.18",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
-    "@tty-pt/scripts": "^0.5.9",
+    "@tty-pt/scripts": "^0.5.17",
     "http-proxy-middleware": "^2.0.6",
     "monaco-css": "^3.8.1",
     "node-sass": "^7.0.1",
