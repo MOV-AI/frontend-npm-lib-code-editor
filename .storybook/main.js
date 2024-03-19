@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 
 module.exports = {
-  stories: ["../src/stories/**/*.stories.[tj]s"],
+  stories: ["../stories/**/*.stories.[tj]s"],
   // addons: ["@storybook/addon-knobs/register"],
   webpackFinal: async (config) => {
     const finalConfig = merge(config, {
