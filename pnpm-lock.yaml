@@ -44,11 +44,11 @@ devDependencies:
     specifier: ^0.17.3
     version: 0.17.4
   '@mov-ai/mov-fe-lib-core':
-    specifier: ^1.2.1-6
-    version: 1.2.1-6
+    specifier: ^1.2.1-7
+    version: 1.2.1-7
   '@mov-ai/mov-fe-lib-react':
-    specifier: ^1.3.2-5
-    version: 1.3.2-5(@babel/core@7.24.1)(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mov-ai/mov-fe-lib-core@1.2.1-6)(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(csstype@3.1.3)(date-fns@2.30.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    specifier: ^1.3.2-7
+    version: 1.3.2-7(@babel/core@7.24.1)(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mov-ai/mov-fe-lib-core@1.2.1-7)(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(csstype@3.1.3)(date-fns@2.30.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
   '@storybook/addon-knobs':
     specifier: ^6.3.1
     version: 6.4.0(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@6.5.16)(@storybook/core-events@6.5.16)(@storybook/theming@6.5.16)(react-dom@18.2.0)(react@18.2.0)
@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^6.3.8
     version: 6.5.16(react-dom@18.2.0)(react@18.2.0)
   '@tty-pt/scripts':
-    specifier: ^0.6.0-10
-    version: 0.6.0-10(@swc/core@1.4.6)(@types/node@20.11.16)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9)
+    specifier: ^0.6.0-14
+    version: 0.6.0-14(@swc/core@1.4.6)(@types/node@20.11.16)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9)
   http-proxy-middleware:
     specifier: ^2.0.6
     version: 2.0.6
@@ -4081,8 +4081,8 @@ packages:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: true
 
-  /@mov-ai/mov-fe-lib-core@1.2.1-6:
-    resolution: {integrity: sha512-Cp4drVUDcfvCE2OyvVwqlg+OKR6GTE9ZYcxaTGYfdAXevE8/yX3dc22LLocjjNpxiF1GYhEhWCde1QpeC9365Q==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-core/1.2.1-6/70c53dadfd1370c39217fe3be4e667377a42fa04}
+  /@mov-ai/mov-fe-lib-core@1.2.1-7:
+    resolution: {integrity: sha512-enYtYPjKPSCD1bnm+mS2lSIfrhE72vx6FPArwrRHAmO0SULoTf/78PF5a53+FJ51dDZiX9ZUG8gERl0ujq63Sg==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-core/1.2.1-7/cb6477f2eb9b9b0fa027b295ba2d28288e08344d}
     dependencies:
       fast-equals: 5.0.1
       js-yaml: 4.1.0
@@ -4096,10 +4096,10 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@mov-ai/mov-fe-lib-react@1.3.2-5(@babel/core@7.24.1)(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mov-ai/mov-fe-lib-core@1.2.1-6)(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(csstype@3.1.3)(date-fns@2.30.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-fbknxKb/9jjNhypm4JFxHSSUHbAl8aGCTaOE8eUyHlbxOrN4FPcDsX3gs1cwzMhkWVLDFfi3/fEzG7lOO0/qxg==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-react/1.3.2-5/5931d600d069dea5cabda5b128f9c442863be765}
+  /@mov-ai/mov-fe-lib-react@1.3.2-7(@babel/core@7.24.1)(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mov-ai/mov-fe-lib-core@1.2.1-7)(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(csstype@3.1.3)(date-fns@2.30.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-zdo93aYDnd2Ekp4JFszj3Laj9AjrXN3q/jmHh5zRJzk/Aci+9AczjcT6tbiRaMr09gV4WqDfYIKUAaOBiX4xUQ==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-react/1.3.2-7/e5426158d6802e7b326354a92d279f8db7d97bc0}
     peerDependencies:
-      '@mov-ai/mov-fe-lib-core': ^1.2.1-6
+      '@mov-ai/mov-fe-lib-core': ^1.2.1-7
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
@@ -4107,7 +4107,7 @@ packages:
       '@fontsource/open-sans': 4.5.14
       '@fontsource/roboto': 4.5.8
       '@material-table/core': 6.3.2(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
-      '@mov-ai/mov-fe-lib-core': 1.2.1-6
+      '@mov-ai/mov-fe-lib-core': 1.2.1-7
       '@mui/icons-material': 5.15.11(@mui/material@5.15.11)(@types/react@18.2.53)(react@18.2.0)
       '@mui/material': 5.15.11(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
       '@mui/styles': 5.15.11(@types/react@18.2.53)(react@18.2.0)
@@ -6538,8 +6538,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /@tty-pt/scripts@0.6.0-10(@swc/core@1.4.6)(@types/node@20.11.16)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9):
-    resolution: {integrity: sha512-qXbX2LuW5z4NXADOC/RDQhiE6Y7sZhkR7snvhZpLEw4lo/GoTVdtkF5OGn+sp0gN3r2hrRjg/Z5YWxnkRLES9Q==}
+  /@tty-pt/scripts@0.6.0-14(@swc/core@1.4.6)(@types/node@20.11.16)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9):
+    resolution: {integrity: sha512-JUgxJqe4PPmP0Yhdv/hXNW4TAFKbg2MxSzupt/YVtkKJbmj/P5EYsAdkuY7gaH8NCz12ZdOThx6hgOiUuU2xsA==}
     hasBin: true
     peerDependencies:
       '@types/node': ^20.10.4
