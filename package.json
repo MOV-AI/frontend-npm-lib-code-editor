@@ -11,7 +11,7 @@
     "main": "src/mov-code.js"
   },
   "library": "MovaiCode",
-  "resolve": {
+  "cdn": {
     "vscode": "@codingame/monaco-languageclient/lib/vscode-compatibility"
   },
   "external": {
@@ -79,7 +79,7 @@
     "@storybook/manager-webpack5": "^6.4.18",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
-    "@tty-pt/scripts": "^0.6.0-14",
+    "@tty-pt/scripts": "^0.6.0-21",
     "http-proxy-middleware": "^2.0.6",
     "monaco-css": "^3.8.1",
     "node-sass": "^7.0.1",
