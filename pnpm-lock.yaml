@@ -12,11 +12,11 @@ dependencies:
     specifier: ^4.17.21
     version: 4.17.21
   monaco-editor:
-    specifier: ^0.47.0
-    version: 0.47.0
+    specifier: ^0.36.0
+    version: 0.36.1
   monaco-editor-core:
-    specifier: ^0.47.0
-    version: 0.47.0
+    specifier: ^0.36.0
+    version: 0.36.1
   normalize-url:
     specifier: ^8.0.1
     version: 8.0.1
@@ -9659,12 +9659,12 @@ packages:
     hasBin: true
     dev: true
 
-  /monaco-editor-core@0.47.0:
-    resolution: {integrity: sha512-xho7dsmSYOIek6bkMKQApWHVyoOBQ1eaBIE6CIlER40paTN0r0efrig6Q9QkCacfzIuNNxNjyb1uMVoMpi8gcA==}
+  /monaco-editor-core@0.36.1:
+    resolution: {integrity: sha512-r2XIW2N/uVDa0WhJSnK5hI3ghJADfbX7KqbVEvZGt6kNkKCC1+6evQdpY/6zCehZt8g1C/jTvFMLXvWrLXUxDA==}
     dev: false
 
-  /monaco-editor@0.47.0:
-    resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
+  /monaco-editor@0.36.1:
+    resolution: {integrity: sha512-/CaclMHKQ3A6rnzBzOADfwdSJ25BFoFT0Emxsc4zYVyav5SkK9iA6lEtIeuN/oRYbwPgviJT+t3l+sjFa28jYg==}
     dev: false
 
   /ms@2.0.0:
