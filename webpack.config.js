@@ -1,4 +1,4 @@
-const makeConfigs = require("@tty-pt/scripts/webpack.config");
+const makeConfigs = require("@mov-ai/mov-fe-lib-scripts/webpack.config");
 
 module.exports = env => {
   const configs = makeConfigs(env);
