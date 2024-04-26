@@ -24,7 +24,8 @@
     "lodash": "global _",
     "react": "global React",
     "@mov-ai/mov-fe-lib-core": "global Movai",
-    "@mov-ai/mov-fe-lib-react": "global MovaiReact"
+    "@mov-ai/mov-fe-lib-react": "global MovaiReact",
+    "@mov-ai/mov-fe-lib-sub": "global ttySub"
   },
   "scripts": {
     "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
@@ -76,9 +77,10 @@
   },
   "devDependencies": {
     "@codingame/monaco-languageclient": "^0.17.3",
-    "@mov-ai/mov-fe-lib-core": "^1.2.1-12",
-    "@mov-ai/mov-fe-lib-react": "^1.3.2-19",
+    "@mov-ai/mov-fe-lib-core": "^1.2.1-13",
+    "@mov-ai/mov-fe-lib-react": "^1.3.3-1",
     "@mov-ai/mov-fe-lib-scripts": "^0.6.0-39",
+    "@mov-ai/mov-fe-lib-sub": "^2.2.31-3",
     "lodash": "^4.17.21",
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
@@ -86,8 +88,9 @@
   },
   "peerDependencies": {
     "@codingame/monaco-languageclient": "^0.17.3",
-    "@mov-ai/mov-fe-lib-core": "^1.2.1-12",
-    "@mov-ai/mov-fe-lib-react": "^1.3.2-19",
+    "@mov-ai/mov-fe-lib-core": "^1.2.1-13",
+    "@mov-ai/mov-fe-lib-react": "^1.3.3-1",
+    "@mov-ai/mov-fe-lib-sub": "^2.2.31-3",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

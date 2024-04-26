@@ -41,14 +41,17 @@ devDependencies:
     specifier: ^0.17.3
     version: 0.17.4
   '@mov-ai/mov-fe-lib-core':
-    specifier: ^1.2.1-12
-    version: 1.2.1-12
+    specifier: ^1.2.1-13
+    version: 1.2.1-13(@mov-ai/mov-fe-lib-sub@2.2.31-3)
   '@mov-ai/mov-fe-lib-react':
-    specifier: ^1.3.2-19
-    version: 1.3.2-19(@material-table/core@6.3.2)(@mov-ai/mov-fe-lib-core@1.2.1-12)(@mov-ai/mov-fe-lib-sub@2.2.31-2)(@mui/icons-material@5.15.11)(@mui/material@5.15.11)(@mui/styles@5.15.11)(@mui/x-date-pickers@6.19.6)(@mui/x-tree-view@6.17.0)(csstype@3.1.3)(lodash@4.17.21)(react-dom@18.2.0)(react-mui-dropzone@4.0.7)(react@18.2.0)
+    specifier: ^1.3.3-1
+    version: 1.3.3-1(@material-table/core@6.3.2)(@mov-ai/mov-fe-lib-core@1.2.1-13)(@mov-ai/mov-fe-lib-sub@2.2.31-3)(@mui/icons-material@5.15.11)(@mui/material@5.15.11)(@mui/styles@5.15.11)(@mui/x-date-pickers@6.19.6)(@mui/x-tree-view@6.17.0)(csstype@3.1.3)(lodash@4.17.21)(react-dom@18.2.0)(react-mui-dropzone@4.0.7)(react@18.2.0)
   '@mov-ai/mov-fe-lib-scripts':
     specifier: ^0.6.0-39
     version: 0.6.0-39(@types/node@20.12.4)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9)
+  '@mov-ai/mov-fe-lib-sub':
+    specifier: ^2.2.31-3
+    version: 2.2.31-3(lodash@4.17.21)
   http-proxy-middleware:
     specifier: ^2.0.6
     version: 2.0.6
@@ -1564,7 +1567,7 @@ packages:
       date-fns: 2.30.0
     dev: true
 
-  /@date-io/date-fns@3.0.0:
+  /@date-io/date-fns@3.0.0(date-fns@2.30.0):
     resolution: {integrity: sha512-hsLAbsdP8LKfi7OQ729cXMWfmHQEq0hn3ysXfAAoc92j6j6sBq0s0tplnkWu6O4iBUpVCYRPGuNjQQhTaOu2AA==}
     peerDependencies:
       date-fns: ^3.2.0
@@ -1573,6 +1576,7 @@ packages:
         optional: true
     dependencies:
       '@date-io/core': 3.0.0
+      date-fns: 2.30.0
     dev: true
 
   /@date-io/dayjs@2.17.0:
@@ -2420,27 +2424,32 @@ packages:
       - react-native
     dev: true
 
-  /@mov-ai/mov-fe-lib-core@1.2.1-12:
-    resolution: {integrity: sha512-8T1xSvug8yBi3uFh4Kg3SeddU17HbQC+HTUhpAe3oXR+WwtobMg8XDaZAEWbPigApFJ5r3bSUTsKluxbKvQBaQ==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-core/1.2.1-12/23ce62a061cb214ce98dc639032f8566aaf9cfb8}
+  /@mov-ai/mov-fe-lib-core@1.2.1-13(@mov-ai/mov-fe-lib-sub@2.2.31-3):
+    resolution: {integrity: sha512-acAaztvGbomWKN6gIgNUDd3JFSNd6YNkNr6vV6N53ZpbdvmiZTDYe9SM2gpuhDPL5WSj4XemPW4B10FsoV512Q==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-core/1.2.1-13/7dbc2bfd8f57517c5a975b9bad890b56187810d7}
+    peerDependencies:
+      '@mov-ai/mov-fe-lib-sub': 2.2.31-3
     dependencies:
+      '@mov-ai/mov-fe-lib-sub': 2.2.31-3(lodash@4.17.21)
       fast-equals: 5.0.1
       js-yaml: 4.1.0
       jwt-decode: 3.1.2
       lodash: 4.17.21
       roslib: 1.4.1
       rxjs: 7.8.1
+    optionalDependencies:
+      react: 18.2.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
     dev: true
 
-  /@mov-ai/mov-fe-lib-react@1.3.2-19(@material-table/core@6.3.2)(@mov-ai/mov-fe-lib-core@1.2.1-12)(@mov-ai/mov-fe-lib-sub@2.2.31-2)(@mui/icons-material@5.15.11)(@mui/material@5.15.11)(@mui/styles@5.15.11)(@mui/x-date-pickers@6.19.6)(@mui/x-tree-view@6.17.0)(csstype@3.1.3)(lodash@4.17.21)(react-dom@18.2.0)(react-mui-dropzone@4.0.7)(react@18.2.0):
-    resolution: {integrity: sha512-mHh6hsRAL1eHe3++GMyyXSqJc1mZTxyUW8S5hPJSCSZFZjL/ZcExiuJ2BwjrBGYx8jAUJy3MP9VrliohbMet1A==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-react/1.3.2-19/66945e5ff63213725aadfa08a358b7853c7b72c0}
+  /@mov-ai/mov-fe-lib-react@1.3.3-1(@material-table/core@6.3.2)(@mov-ai/mov-fe-lib-core@1.2.1-13)(@mov-ai/mov-fe-lib-sub@2.2.31-3)(@mui/icons-material@5.15.11)(@mui/material@5.15.11)(@mui/styles@5.15.11)(@mui/x-date-pickers@6.19.6)(@mui/x-tree-view@6.17.0)(csstype@3.1.3)(lodash@4.17.21)(react-dom@18.2.0)(react-mui-dropzone@4.0.7)(react@18.2.0):
+    resolution: {integrity: sha512-RwaispNeiqQzr5/X+NxsSTi26Y1h67m7AXJ0sJabJuHSYTsAgxm7QrNec2Cu4jqCoFl1jdy+n14qIxS15OUAHg==, tarball: https://npm.pkg.github.com/download/@MOV-AI/mov-fe-lib-react/1.3.3-1/d81b3ff428691554a0c667c1ddf7ba5cfa51a34d}
     peerDependencies:
       '@material-table/core': ^6.3.2
-      '@mov-ai/mov-fe-lib-core': ^1.2.1-12
-      '@mov-ai/mov-fe-lib-sub': ^2.2.31-2
+      '@mov-ai/mov-fe-lib-core': ^1.2.1-13
+      '@mov-ai/mov-fe-lib-sub': ^2.2.31-3
       '@mui/icons-material': ^5.15.11
       '@mui/material': ^5.15.11
       '@mui/styles': ^5.15.11
@@ -2451,18 +2460,19 @@ packages:
       react-dom: ^18.2.0
       react-mui-dropzone: ^4.0.7
     dependencies:
-      '@date-io/date-fns': 3.0.0
+      '@date-io/date-fns': 3.0.0(date-fns@2.30.0)
       '@fontsource/open-sans': 5.0.27
       '@fontsource/roboto': 5.0.12
       '@material-table/core': 6.3.2(@mui/system@5.15.11)(@types/react-dom@18.2.21)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
-      '@mov-ai/mov-fe-lib-core': 1.2.1-12
-      '@mov-ai/mov-fe-lib-sub': 2.2.31-2(lodash@4.17.21)
+      '@mov-ai/mov-fe-lib-core': 1.2.1-13(@mov-ai/mov-fe-lib-sub@2.2.31-3)
+      '@mov-ai/mov-fe-lib-sub': 2.2.31-3(lodash@4.17.21)
       '@mui/icons-material': 5.15.11(@mui/material@5.15.11)(@types/react@18.2.53)(react@18.2.0)
       '@mui/material': 5.15.11(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
       '@mui/styles': 5.15.11(@types/react@18.2.53)(react@18.2.0)
       '@mui/x-date-pickers': 6.19.6(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mui/material@5.15.11)(@mui/system@5.15.11)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
       '@mui/x-tree-view': 6.17.0(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@mui/material@5.15.11)(@mui/system@5.15.11)(@types/react@18.2.53)(react-dom@18.2.0)(react@18.2.0)
       clsx: 2.1.0
+      date-fns: 2.30.0
       filefy: 0.1.11
       i18next: 23.10.1
       jspdf: 2.5.1
@@ -2482,7 +2492,6 @@ packages:
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - csstype
-      - date-fns
     dev: true
 
   /@mov-ai/mov-fe-lib-scripts@0.6.0-39(@types/node@20.12.4)(@types/react-dom@18.2.21)(@types/react@18.2.53)(@types/testing-library__jest-dom@5.14.9):
@@ -2593,8 +2602,8 @@ packages:
       - webpack-plugin-serve
     dev: true
 
-  /@mov-ai/mov-fe-lib-sub@2.2.31-2(lodash@4.17.21):
-    resolution: {integrity: sha512-CEzXJApjECL/vcL4Y+GACWaml+Kk8begZou+/knPG3vRLo+7OuZ7bGGwULA1VDPfayF/anM0g0qnjQSgAl+UtQ==, tarball: https://npm.pkg.github.com/download/@mov-ai/mov-fe-lib-sub/2.2.31-2/81bdeb706678f44df41369b5a29d5a5d5da2487e}
+  /@mov-ai/mov-fe-lib-sub@2.2.31-3(lodash@4.17.21):
+    resolution: {integrity: sha512-dvJ7+GWslySvOVkplkP4ecpIfqgaZqU8lXLvbyn6+frKfiHxWNiCA7yr7GRtb/i9+HnrZ+jXQNMcns1lAgchvQ==, tarball: https://npm.pkg.github.com/download/@mov-ai/mov-fe-lib-sub/2.2.31-3/cec5ffa4cf4d841f04087f709a11bc6969f75661}
     peerDependencies:
       lodash: ^4.17.21
     dependencies:
