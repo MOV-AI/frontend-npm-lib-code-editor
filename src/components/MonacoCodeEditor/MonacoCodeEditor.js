@@ -18,7 +18,6 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     theme,
     style,
     actions,
-    onSave,
     language,
     onChange,
     disableMinimap,
@@ -119,36 +118,6 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
       monaco.editor.setModelLanguage(model, language);
     }
   }, [language]);
-
-  /**
-   * On update save function
-   */
-  React.useEffect(() => {
-    const saveAction = editor.current.getAction("save");
-    // Remove previous save action (if existing)
-    if (saveAction) {
-      const menuItems = MenuRegistry._menuItems;
-      const contextMenuEntry = [...menuItems].find(
-        (entry) => entry[0]._debugName == "EditorContext"
-      );
-      const contextMenuLinks = contextMenuEntry[1];
-      removeAction(contextMenuLinks, saveAction.id);
-    }
-    // Add new save action
-    if (onSave)
-      editor.current.addAction({
-        id: "save",
-        label: "Save",
-        keybindings: [
-          monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S),
-        ],
-        precondition: null,
-        keybindingContext: null,
-        contextMenuGroupId: "navigation",
-        contextMenuOrder: 1,
-        run: onSave,
-      });
-  }, [onSave]);
 
   //========================================================================================
   /*                                                                                      *
