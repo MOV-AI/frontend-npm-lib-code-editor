@@ -21,18 +21,18 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 self.MonacoEnvironment = {
   getWorkerUrl: function (_, label) {
     if (label === "json") {
-      return globalThis.__webpack_public_path__ + "json-worker.js";
+      return "./json.worker.bundle.js";
     }
     if (label === "css" || label === "scss" || label === "less") {
-      return globalThis.__webpack_public_path__ + "css-worker.js";
+      return "./css.worker.bundle.js";
     }
     if (label === "html" || label === "handlebars" || label === "razor") {
-      return globalThis.__webpack_public_path__ + "html.worker.js";
+      return "./html.worker.bundle.js";
     }
     if (label === "typescript" || label === "javascript") {
-      return globalThis.__webpack_public_path__ + "ts-worker.js";
+      return "./ts.worker.bundle.js";
     }
-    return globalThis.__webpack_public_path__ + "editor-worker.js";
+    return "./editor.worker.bundle.js";
   },
 };
 
