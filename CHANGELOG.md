@@ -1,4 +1,4 @@
-# 1.1.1
+# 1.1.3
 
 - [FP-2801 - Revert lib-code to the version before the MUI / tty changes](https://movai.atlassian.net/browse/FP-2801)
 
