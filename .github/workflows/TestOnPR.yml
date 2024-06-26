@@ -11,9 +11,8 @@ jobs:
   CI:
     uses: MOV-AI/.github/.github/workflows/npm-workflow.yml@v2.1
     with:
-      deploy: "false"
-      run_tests: "true"
-      use_nvmrc: "true"
+      deploy: 'false'
+      run_tests: 'true'
       pm: "pnpm"
       pnpm_version: "9.4.0"
     secrets:
