@@ -1,6 +1,7 @@
 # TBD
 
 - [QAP-3964](https://movai.atlassian.net/browse/QAP-3964): Review devcontainer configuration for lib-code
+- [FP-2851](https://movai.atlassian.net/browse/FP-2851): Added new unit tests to repo
 
 # 1.1.3
 
