@@ -4,16 +4,10 @@
 
 Mov.ai's library to expose Code Editors
 
-
-## Packages available
-
-- MonacoCodeEditor
-
 # Table of Content
 
 <!-- TOC -->
 * [Mov.ai library for code editor](#movai-library-for-code-editor)
-  * [Packages available](#packages-available)
 * [Table of Content](#table-of-content)
 * [Setting Up Your Development Environment](#setting-up-your-development-environment)
     * [Common Configuration](#common-configuration)
