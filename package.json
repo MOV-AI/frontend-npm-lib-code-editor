@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
-    "test": "jest",
+    "test": "jest --coverage",
     "coverage": "npm test -- --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
