@@ -3,15 +3,17 @@ on:
   push:
     branches:
       - main
-      - 'releases/**'
+      - "releases/**"
 
 jobs:
   CI:
     uses: MOV-AI/.github/.github/workflows/npm-workflow.yml@v2.1
     with:
-      deploy: 'true'
-      run_tests: 'false'
+      deploy: "true"
+      run_tests: "true"
+      use_nvmrc: "true"
       pm: "pnpm"
+      pnpm_version: "9.11.0"
     secrets:
       auto_commit_user: ${{ secrets.RAISE_BOT_COMMIT_USER }}
       auto_commit_mail: ${{ secrets.RAISE_BOT_COMMIT_MAIL }}
@@ -21,4 +23,3 @@ jobs:
       gh_token: ${{ secrets.GITHUB_TOKEN }}
       sonar_token: ${{ secrets.SONAR_TOKEN }}
       npm_token: ${{ secrets.NPM_TOKEN }}
-      
