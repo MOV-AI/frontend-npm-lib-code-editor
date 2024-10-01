@@ -1,4 +1,4 @@
-# TBD
+# 1.1.4
 
 - [FP-2926](https://movai.atlassian.net/browse/FP-2926): Clear console and app errors
 - [QAP-3964](https://movai.atlassian.net/browse/QAP-3964): Review devcontainer configuration for lib-code
