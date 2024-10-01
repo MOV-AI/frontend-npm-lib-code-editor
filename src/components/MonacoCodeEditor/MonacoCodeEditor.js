@@ -175,7 +175,7 @@ MonacoCodeEditor.propTypes = {
   value: PropTypes.string,
   style: PropTypes.object,
   useLanguageServer: PropTypes.bool,
-  builtins: PropTypes.object,
+  builtins: PropTypes.array,
 };
 
 MonacoCodeEditor.defaultProps = {

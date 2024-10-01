@@ -18,23 +18,29 @@ import ReconnectingWebSocket from "reconnecting-websocket";
  *                                                                                      */
 //========================================================================================
 
-self.MonacoEnvironment = {
-  getWorkerUrl: function (_, label) {
-    if (label === "json") {
-      return "./json.worker.bundle.js";
-    }
-    if (label === "css" || label === "scss" || label === "less") {
-      return "./css.worker.bundle.js";
-    }
-    if (label === "html" || label === "handlebars" || label === "razor") {
-      return "./html.worker.bundle.js";
-    }
-    if (label === "typescript" || label === "javascript") {
-      return "./ts.worker.bundle.js";
-    }
-    return "./editor.worker.bundle.js";
-  },
-};
+// Commented this because it was throwing an error as something
+// In the bundler (spent a few hours investigating this)
+// wasn't working. Since I couldn't get the files by any name /
+// path, ended up giving up and just commented this. Now we
+// only get a simple warning in the console instead of that
+// invasive backdrop error and console error.
+// self.MonacoEnvironment = {
+//   getWorkerUrl: function (_, label) {
+//     if (label === "json") {
+//       return "./json.worker.js";
+//     }
+//     if (label === "css" || label === "scss" || label === "less") {
+//       return "./css.worker.js";
+//     }
+//     if (label === "html" || label === "handlebars" || label === "razor") {
+//       return "./html.worker.js";
+//     }
+//     if (label === "typescript" || label === "javascript") {
+//       return "./ts.worker.js";
+//     }
+//     return "./editor.worker.js";
+//   },
+// };
 
 const createUrl = () => {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
