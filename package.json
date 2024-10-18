@@ -30,8 +30,13 @@
     "coverage": "npm test -- --coverage",
     "depcheck": "npx depcheck",
     "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
+    "prepare": "husky",
     "storybook": "start-storybook -p 6006",
     "test": "jest --coverage"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown",
+    "package.json": "sort-package-json"
   },
   "dependencies": {
     "@codingame/monaco-jsonrpc": "^0.3.1",
@@ -68,8 +73,10 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
     "http-proxy-middleware": "^2.0.6",
+    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.2.10",
     "monaco-css": "^3.8.1",
     "monaco-editor": "^0.31.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
