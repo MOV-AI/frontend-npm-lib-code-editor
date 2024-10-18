@@ -94,7 +94,7 @@ function sendBuiltins2LanguageServer(builtins) {
   console.debug(
     "Sending to language server builtins",
     lsBuiltinsAddress,
-    builtinsJson
+    builtinsJson,
   );
   fetch(lsBuiltinsAddress, {
     method: "POST",
@@ -126,7 +126,7 @@ function getSuggestions(model, position) {
   const split = textUntilPosition.split(" ");
   const lastWord = split[split.length - 1];
   const builtinVars = Object.values(BUILTINS).filter(
-    (builtin) => builtin.kind === monaco.languages.CompletionItemKind.Variable
+    (builtin) => builtin.kind === monaco.languages.CompletionItemKind.Variable,
   );
   let suggestionsForObject = [];
   for (let builtinVar of builtinVars) {
@@ -140,9 +140,9 @@ function getSuggestions(model, position) {
           sortText: /^_{1,2}\w+_{1,2}$/.test(label)
             ? "z" + label
             : /^_\w+$/.test(label)
-            ? "y" + label
-            : label,
-        })
+              ? "y" + label
+              : label,
+        }),
       );
     }
   }
@@ -187,7 +187,7 @@ const useMonacoEditorCore = () => {
       connectionProvider: {
         get: (errorHandler, closeHandler) => {
           return Promise.resolve(
-            createConnection(connection, errorHandler, closeHandler)
+            createConnection(connection, errorHandler, closeHandler),
           );
         },
       },
@@ -223,7 +223,7 @@ const useMonacoEditorCore = () => {
         provideCompletionItems: function (model, position) {
           console.debug(
             "debug provide completion item",
-            getSuggestions(model, position)
+            getSuggestions(model, position),
           );
           return {
             suggestions: getSuggestions(model, position),

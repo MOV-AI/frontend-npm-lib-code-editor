@@ -129,7 +129,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     if (saveAction) {
       const menuItems = MenuRegistry._menuItems;
       const contextMenuEntry = [...menuItems].find(
-        (entry) => entry[0]._debugName == "EditorContext"
+        (entry) => entry[0]._debugName == "EditorContext",
       );
       const contextMenuLinks = contextMenuEntry[1];
       removeAction(contextMenuLinks, saveAction.id);
