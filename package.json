@@ -73,6 +73,8 @@
     "http-proxy-middleware": "^2.0.6",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "prettier": "3.3.3",
+    "sort-package-json": "2.10.1",
     "monaco-css": "^3.8.1",
     "monaco-editor": "^0.31.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
