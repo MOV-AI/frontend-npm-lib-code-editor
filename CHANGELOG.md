@@ -1,3 +1,7 @@
+# TBD
+
+- [FP-2920](https://movai.atlassian.net/browse/FP-2920): Configure husky, lint-staged and prettier for lib-code-editor
+
 # 1.1.4
 
 - [FP-2926](https://movai.atlassian.net/browse/FP-2926): Clear console and app errors

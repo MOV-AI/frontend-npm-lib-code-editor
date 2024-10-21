@@ -2,40 +2,42 @@
   "name": "@mov-ai/mov-fe-lib-code-editor",
   "version": "1.1.4-0",
   "description": "Mov.ai's library for Code Editors",
-  "main": "./dist/index.js",
-  "scripts": {
-    "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
-    "test": "jest --coverage",
-    "coverage": "npm test -- --coverage",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "build": "webpack --mode=production",
-    "buildDev": "webpack --mode=development --watch",
-    "depcheck": "npx depcheck",
-    "clean": "rm -rf node_modules"
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/mov-ai"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
-  },
   "keywords": [
     "frontend",
     "monaco editor",
     "code editor",
     "react.js"
   ],
-  "author": "MOV.AI",
-  "license": "ISC",
+  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-code-editor#readme",
   "bugs": {
     "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor/issues"
   },
-  "homepage": "https://github.com/MOV-AI/frontend-npm-lib-code-editor#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MOV-AI/frontend-npm-lib-code-editor.git"
+  },
+  "license": "ISC",
+  "author": "MOV.AI",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build-storybook": "build-storybook",
+    "buildDev": "webpack --mode=development --watch",
+    "clean": "rm -rf node_modules",
+    "coverage": "npm test -- --coverage",
+    "depcheck": "npx depcheck",
+    "lock": "mv ../../pnpm-workspace.yaml ../../pnpm-workspace.yaml.bak ; pnpm i ; mv ../../pnpm-workspace.yaml.bak ../../pnpm-workspace.yaml",
+    "prepare": "husky",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest --coverage"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown",
+    "package.json": "sort-package-json"
+  },
   "dependencies": {
     "@codingame/monaco-jsonrpc": "^0.3.1",
     "monaco-editor-core": "^0.31.1",
@@ -71,16 +73,20 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
     "http-proxy-middleware": "^2.0.6",
+    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.2.10",
     "monaco-css": "^3.8.1",
     "monaco-editor": "^0.31.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "node-sass": "^7.0.1",
     "path": "^0.12.7",
+    "prettier": "3.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass-loader": "^12.1.0",
+    "sort-package-json": "2.10.1",
     "storybook-addon-mock": "^2.4.1",
     "style-loader": "^3.3.0",
     "typescript": "^4.4.3",
@@ -90,14 +96,6 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^3.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "@types/react": "^18.2.45",
-      "@types/react-dom": "^18.2.18"
-    }
-  },
   "peerDependencies": {
     "@codingame/monaco-languageclient": "^0.17.3",
     "@mov-ai/mov-fe-lib-core": "^1.2.3-1",
@@ -106,5 +104,16 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "packageManager": "pnpm@9.11.0"
+  "packageManager": "pnpm@9.11.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/mov-ai"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^18.2.45",
+      "@types/react-dom": "^18.2.18",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
+  }
 }
