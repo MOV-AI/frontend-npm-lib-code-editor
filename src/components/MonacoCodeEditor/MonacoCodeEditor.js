@@ -27,8 +27,8 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   } = props;
   // Hooks
   const { createEditor } = useLanguageServer
-    ? useMonacoEditorServer()
-    : useMonacoEditor();
+    ? useMonacoEditorServer([language])
+    : useMonacoEditor([language]);
 
   //========================================================================================
   /*                                                                                      *
@@ -62,6 +62,9 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
    */
   React.useEffect(() => {
     const element = editorRef.current;
+
+    if (editor.current) element.innerHTML = "";
+
     const _editor = createEditor({
       element,
       value,
@@ -88,7 +91,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     // Set editor ref
     if (ref) ref.current = _editor;
     editor.current = _editor;
-  }, []);
+  }, [createEditor]);
 
   /**
    * On change Code
