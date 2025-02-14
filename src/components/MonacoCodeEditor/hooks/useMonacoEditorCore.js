@@ -163,7 +163,7 @@ function getSuggestions(model, position) {
  *                                                                                      */
 //========================================================================================
 
-const useMonacoEditorCore = () => {
+const useMonacoEditorCore = (dependencies) => {
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
       BUILTINS = { ...BUILTINS, ...actualBuiltins };
@@ -171,28 +171,31 @@ const useMonacoEditorCore = () => {
     });
   }, []);
 
-  const createLanguageClient = useCallback((connection) => {
-    return new MonacoLanguageClient({
-      name: "Python Language Client",
-      clientOptions: {
-        // use a language id as a document selector
-        documentSelector: ["python"],
-        // disable the default error handler
-        errorHandler: {
-          error: () => ErrorAction.Continue,
-          closed: () => CloseAction.DoNotRestart,
+  const createLanguageClient = useCallback(
+    (connection) => {
+      return new MonacoLanguageClient({
+        name: "Python Language Client",
+        clientOptions: {
+          // use a language id as a document selector
+          documentSelector: ["python"],
+          // disable the default error handler
+          errorHandler: {
+            error: () => ErrorAction.Continue,
+            closed: () => CloseAction.DoNotRestart,
+          },
         },
-      },
-      // create a language client connection from the JSON RPC connection on demand
-      connectionProvider: {
-        get: (errorHandler, closeHandler) => {
-          return Promise.resolve(
-            createConnection(connection, errorHandler, closeHandler),
-          );
+        // create a language client connection from the JSON RPC connection on demand
+        connectionProvider: {
+          get: (errorHandler, closeHandler) => {
+            return Promise.resolve(
+              createConnection(connection, errorHandler, closeHandler),
+            );
+          },
         },
-      },
-    });
-  }, []);
+      });
+    },
+    [dependencies],
+  );
 
   /**
    * Create editor
