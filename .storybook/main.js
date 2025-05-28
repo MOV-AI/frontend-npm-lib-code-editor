@@ -11,7 +11,7 @@ module.exports = {
       resolve: {
         alias: {
           vscode: require.resolve(
-            "@codingame/monaco-languageclient/lib/vscode-compatibility"
+            "@codingame/monaco-languageclient/lib/vscode-compatibility",
           ),
         },
         extensions: [".js", ".json", ".ttf"],
@@ -39,5 +39,5 @@ module.exports = {
   core: {
     builder: "webpack5",
   },
-  addons: ['storybook-addon-mock/register'],
+  addons: ["storybook-addon-mock/register"],
 };

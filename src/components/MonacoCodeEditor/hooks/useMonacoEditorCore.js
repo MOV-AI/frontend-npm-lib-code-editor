@@ -94,7 +94,7 @@ function sendBuiltins2LanguageServer(builtins) {
   console.debug(
     "Sending to language server builtins",
     lsBuiltinsAddress,
-    builtinsJson
+    builtinsJson,
   );
   fetch(lsBuiltinsAddress, {
     method: "POST",
@@ -126,7 +126,7 @@ function getSuggestions(model, position) {
   const split = textUntilPosition.split(" ");
   const lastWord = split[split.length - 1];
   const builtinVars = Object.values(BUILTINS).filter(
-    (builtin) => builtin.kind === monaco.languages.CompletionItemKind.Variable
+    (builtin) => builtin.kind === monaco.languages.CompletionItemKind.Variable,
   );
   let suggestionsForObject = [];
   for (let builtinVar of builtinVars) {
@@ -140,9 +140,9 @@ function getSuggestions(model, position) {
           sortText: /^_{1,2}\w+_{1,2}$/.test(label)
             ? "z" + label
             : /^_\w+$/.test(label)
-            ? "y" + label
-            : label,
-        })
+              ? "y" + label
+              : label,
+        }),
       );
     }
   }
@@ -163,7 +163,7 @@ function getSuggestions(model, position) {
  *                                                                                      */
 //========================================================================================
 
-const useMonacoEditorCore = () => {
+const useMonacoEditorCore = (dependencies) => {
   useEffect(() => {
     getBuiltins().then((actualBuiltins) => {
       BUILTINS = { ...BUILTINS, ...actualBuiltins };
@@ -171,28 +171,31 @@ const useMonacoEditorCore = () => {
     });
   }, []);
 
-  const createLanguageClient = useCallback((connection) => {
-    return new MonacoLanguageClient({
-      name: "Python Language Client",
-      clientOptions: {
-        // use a language id as a document selector
-        documentSelector: ["python"],
-        // disable the default error handler
-        errorHandler: {
-          error: () => ErrorAction.Continue,
-          closed: () => CloseAction.DoNotRestart,
+  const createLanguageClient = useCallback(
+    (connection) => {
+      return new MonacoLanguageClient({
+        name: "Python Language Client",
+        clientOptions: {
+          // use a language id as a document selector
+          documentSelector: ["python"],
+          // disable the default error handler
+          errorHandler: {
+            error: () => ErrorAction.Continue,
+            closed: () => CloseAction.DoNotRestart,
+          },
         },
-      },
-      // create a language client connection from the JSON RPC connection on demand
-      connectionProvider: {
-        get: (errorHandler, closeHandler) => {
-          return Promise.resolve(
-            createConnection(connection, errorHandler, closeHandler)
-          );
+        // create a language client connection from the JSON RPC connection on demand
+        connectionProvider: {
+          get: (errorHandler, closeHandler) => {
+            return Promise.resolve(
+              createConnection(connection, errorHandler, closeHandler),
+            );
+          },
         },
-      },
-    });
-  }, []);
+      });
+    },
+    [dependencies],
+  );
 
   /**
    * Create editor
@@ -223,7 +226,7 @@ const useMonacoEditorCore = () => {
         provideCompletionItems: function (model, position) {
           console.debug(
             "debug provide completion item",
-            getSuggestions(model, position)
+            getSuggestions(model, position),
           );
           return {
             suggestions: getSuggestions(model, position),

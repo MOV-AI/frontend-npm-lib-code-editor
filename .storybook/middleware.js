@@ -20,8 +20,8 @@ module.exports = function (router) {
         ws: true,
         logLevel: "error",
         secure: false,
-      }
-    )
+      },
+    ),
   );
 
   // to test language server locally
@@ -33,7 +33,7 @@ module.exports = function (router) {
       logLevel: "error",
       secure: false,
       changeOrigin: true,
-    })
+    }),
   );
 
   // using movai-flow dev

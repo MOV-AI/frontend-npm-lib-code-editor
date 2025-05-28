@@ -3,11 +3,10 @@ module.exports = {
     "^.+\\.[tj]sx?$": "babel-jest",
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@codingame/monaco-languageclient|vscode-languageserver-textdocument)/)"
+    "node_modules/(?!(@codingame/monaco-languageclient|vscode-languageserver-textdocument)/)",
   ],
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
   moduleNameMapper: {
-    '^monaco-editor$': '<rootDir>/src/__mocks__/monaco-editor.js', // Adjust as needed
+    "^monaco-editor$": "<rootDir>/src/__mocks__/monaco-editor.js", // Adjust as needed
   },
 };
-  

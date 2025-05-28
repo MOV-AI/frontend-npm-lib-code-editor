@@ -1,3 +1,9 @@
+# TBD
+
+- [FP-3138](https://movai.atlassian.net/browse/FP-3138): Not able to use dev container in all frontend repos
+- [FP-2920](https://movai.atlassian.net/browse/FP-2920): Configure husky, lint-staged and prettier for lib-code-editor
+- [FP-3050](https://movai.atlassian.net/browse/FP-3050): Configurations: Toggle between XML and YAML isn't highlighting in real-time
+
 # 1.1.4
 
 - [FP-2926](https://movai.atlassian.net/browse/FP-2926): Clear console and app errors

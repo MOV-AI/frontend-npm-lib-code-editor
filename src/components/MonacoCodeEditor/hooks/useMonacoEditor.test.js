@@ -1,22 +1,21 @@
+import * as monaco from "monaco-editor";
+import { renderHook } from "@testing-library/react-hooks";
+import useMonacoEditor from "./useMonacoEditor";
 
-import * as monaco from 'monaco-editor';
-import { renderHook } from '@testing-library/react-hooks';
-import useMonacoEditor from './useMonacoEditor';
-
-describe('useMonacoEditor', () => {
+describe("useMonacoEditor", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should create editor with given props', () => {
+  it("should create editor with given props", () => {
     const { result } = renderHook(() => useMonacoEditor());
     const props = {
-      element: document.createElement('div'),
+      element: document.createElement("div"),
       value: 'console.log("Hello, world!");',
-      language: 'javascript',
-      theme: 'vs-dark',
+      language: "javascript",
+      theme: "vs-dark",
       options: {},
-      disableMinimap: false
+      disableMinimap: false,
     };
 
     result.current.createEditor(props);
@@ -25,28 +24,28 @@ describe('useMonacoEditor', () => {
       value: props.value,
       language: props.language,
       theme: props.theme,
-      'semanticHighlighting.enabled': true,
+      "semanticHighlighting.enabled": true,
       selectOnLineNumbers: true,
-      autoIndent: 'full',
-      lineNumbers: 'on',
+      autoIndent: "full",
+      lineNumbers: "on",
       overviewRulerBorder: true,
       overviewRulerLanes: 3,
       minimap: {
-        enabled: true
+        enabled: true,
       },
-      ...props.options
+      ...props.options,
     });
   });
 
-  it('should disable minimap and overview ruler when disableMinimap is true', () => {
+  it("should disable minimap and overview ruler when disableMinimap is true", () => {
     const { result } = renderHook(() => useMonacoEditor());
     const props = {
-      element: document.createElement('div'),
+      element: document.createElement("div"),
       value: 'console.log("Hello, world!");',
-      language: 'javascript',
-      theme: 'vs-dark',
+      language: "javascript",
+      theme: "vs-dark",
       options: {},
-      disableMinimap: true
+      disableMinimap: true,
     };
 
     result.current.createEditor(props);
@@ -55,16 +54,16 @@ describe('useMonacoEditor', () => {
       value: props.value,
       language: props.language,
       theme: props.theme,
-      'semanticHighlighting.enabled': true,
+      "semanticHighlighting.enabled": true,
       selectOnLineNumbers: true,
-      autoIndent: 'full',
-      lineNumbers: 'off',
+      autoIndent: "full",
+      lineNumbers: "off",
       overviewRulerBorder: false,
       overviewRulerLanes: 0,
       minimap: {
-        enabled: false
+        enabled: false,
       },
-      ...props.options
+      ...props.options,
     });
   });
 });
