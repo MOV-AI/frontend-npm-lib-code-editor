@@ -1,4 +1,4 @@
-# TBD
+# 2.6.0
 
 - [FP-3138](https://movai.atlassian.net/browse/FP-3138): Not able to use dev container in all frontend repos
 - [FP-2920](https://movai.atlassian.net/browse/FP-2920): Configure husky, lint-staged and prettier for lib-code-editor
