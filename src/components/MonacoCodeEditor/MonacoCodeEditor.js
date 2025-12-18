@@ -1,14 +1,14 @@
 import * as monaco from "monaco-editor-core";
 import { MenuRegistry } from "monaco-editor/esm/vs/platform/actions/common/actions";
 import PropTypes from "prop-types";
-import React, { createRef, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import useMonacoEditor from "./hooks/useMonacoEditor";
 import useMonacoEditorServer from "./hooks/useMonacoEditorCore";
 import "./MonacoCodeEditor.css";
 
 const MonacoCodeEditor = React.forwardRef((props, ref) => {
   // Refs
-  const editorRef = createRef();
+  const editorRef = useRef(null);
   const debounceRef = useRef(null);
   const editor = useRef(null);
   // Props
@@ -60,7 +60,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   /**
    * On component did mount
    */
-  React.useEffect(() => {
+  useEffect(() => {
     const element = editorRef.current;
 
     if (editor.current) element.innerHTML = "";
@@ -75,7 +75,6 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
       builtins,
       options: { ...props.options },
     });
-
     // ========== Setup events ========== //
     // On change
     _editor.onDidChangeModelContent(() => onChange(_editor.getValue()));
@@ -91,12 +90,12 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
     // Set editor ref
     if (ref) ref.current = _editor;
     editor.current = _editor;
-  }, [createEditor]);
+  }, [language]);
 
   /**
    * On change Code
    */
-  React.useEffect(() => {
+  useEffect(() => {
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       const currentValue = editor.current?.getValue();
@@ -109,14 +108,14 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   /**
    * On change Theme
    */
-  React.useEffect(() => {
+  useEffect(() => {
     monaco.editor.setTheme(theme);
   }, [theme]);
 
   /**
    * On change Language
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (editor.current) {
       const model = editor.current.getModel();
       monaco.editor.setModelLanguage(model, language);
@@ -126,7 +125,7 @@ const MonacoCodeEditor = React.forwardRef((props, ref) => {
   /**
    * On update save function
    */
-  React.useEffect(() => {
+  useEffect(() => {
     const saveAction = editor.current.getAction("save");
     // Remove previous save action (if existing)
     if (saveAction) {
